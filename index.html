@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PaNIC CV Studio — Tạo CV đẹp, chuẩn nhà tuyển dụng</title>
+<meta name="description" content="Tạo CV đẹp, chuẩn nhà tuyển dụng trong vài phút: 15 mẫu cho sinh viên, người mới tốt nghiệp và nhiều kinh nghiệm. Xem trước tức thì, xuất PDF, ảnh PNG hoặc trang HTML miễn phí.">
+<meta name="theme-color" content="#0A0C11">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="CV Studio">
+<!-- Ảnh chia sẻ cần URL tuyệt đối: đổi tên miền nếu dự án trên Vercel có địa chỉ khác -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PaNIC CV Studio">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:url" content="https://panic-create-cv.vercel.app/">
+<meta property="og:title" content="PaNIC CV Studio — Tạo CV đẹp, chuẩn nhà tuyển dụng">
+<meta property="og:description" content="15 mẫu CV cho sinh viên, người mới tốt nghiệp và nhiều kinh nghiệm. Xem trước tức thì, xuất PDF chuẩn A4.">
+<meta property="og:image" content="https://panic-create-cv.vercel.app/assets/og.png?v=2">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PaNIC CV Studio: tạo CV đẹp, chuẩn nhà tuyển dụng, với ba mẫu CV minh hoạ và nút Xuất PDF">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PaNIC CV Studio — Tạo CV đẹp, chuẩn nhà tuyển dụng">
+<meta name="twitter:description" content="15 mẫu CV cho sinh viên, người mới tốt nghiệp và nhiều kinh nghiệm. Xem trước tức thì, xuất PDF chuẩn A4.">
+<meta name="twitter:image" content="https://panic-create-cv.vercel.app/assets/og.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- CSS của CV: được nhúng nguyên văn vào file HTML khi xuất, nên mọi style của template đặt ở đây -->
+<style id="cv-style">
+.cv { --accent:#f39c12; --side:#343a3d; width:794px; min-height:297mm; box-sizing:border-box;
+  font:14px/1.45 Roboto, Arial, sans-serif; color:#222; background:#fff;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.cv * { box-sizing:border-box; }
+.cv b { font-weight:500; }
+.cv .li { position:relative; padding-left:22px; }
+.cv .li::before { content:""; position:absolute; left:9px; top:calc(.725em - 2.5px); width:5px; height:5px; border-radius:50%; background:var(--accent); }
+.cv .gap { height:12px; }
+
+/* Template: sidebar tối (giống mẫu) */
+.tpl-dark { display:grid; grid-template-columns:270px 1fr;
+  background:linear-gradient(90deg, var(--side) 270px, #fff 270px); }
+.tpl-dark aside { padding:28px 26px; color:#fff; background:var(--side); }
+.tpl-dark main { padding:28px 26px 28px 30px; }
+.tpl-dark .avatar { width:100%; aspect-ratio:1; }
+.tpl-dark .name { color:var(--accent); font-size:26px; font-weight:500; line-height:1.6; margin:34px 0 0; word-wrap:break-word; }
+.tpl-dark .position { color:#d1d5db; font-size:15px; margin-top:4px; }
+.tpl-dark aside .sec:first-of-type { margin-top:30px; }
+.tpl-dark .sec { margin-bottom:22px; }
+.tpl-dark .sec h2 { display:flex; align-items:center; gap:14px; color:var(--accent); font-size:18px; font-weight:500; margin:0 0 12px; break-after:avoid; }
+.tpl-dark .sec h2::after { content:""; flex:1; height:2px; background:var(--accent); }
+.tpl-dark .ct { display:flex; gap:12px; align-items:flex-start; margin-bottom:2px; word-break:break-word; }
+.tpl-dark .ct svg { flex:none; width:16px; height:16px; margin-top:3px; fill:var(--accent); }
+.tpl-dark .item { margin-bottom:12px; }
+.tpl-dark .row { display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; break-after:avoid; }
+.tpl-dark .row i { white-space:nowrap; }
+.tpl-dark .org { font-weight:500; margin-bottom:8px; break-after:avoid; }
+.tpl-dark .yr { display:flex; gap:20px; margin-bottom:4px; }
+.tpl-dark .yr b { width:36px; flex:none; }
+
+.cv .avatar { background:#e5e7eb center/cover no-repeat; }
+.cv .avatar.empty { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239ca3af'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z'/%3E%3C/svg%3E"); background-size:60%; background-position:center bottom; }
+.cv .row { display:flex; justify-content:space-between; gap:12px; break-after:avoid; }
+.cv .row i { white-space:nowrap; }
+.cv .org, .cv .sec h2 { break-after:avoid; }
+.cv .yr { display:flex; gap:20px; margin-bottom:4px; }
+.cv .yr b { width:36px; flex:none; }
+.cv .cts { display:flex; flex-wrap:wrap; gap:5px 18px; }
+.cv .cts .ct { display:flex; align-items:flex-start; gap:7px; word-break:break-word; }
+.cv .cts svg { flex:none; width:14px; height:14px; margin-top:2px; fill:var(--accent); }
+@media print { .cv:not(.tpl-dark) { min-height:0; } }
+
+/* Template: Thanh lịch — một cột, chuẩn ATS */
+.tpl-classic { padding:40px 54px 36px; }
+.tpl-classic .hd { display:flex; align-items:center; gap:24px; padding-bottom:20px; border-bottom:2px solid var(--side); }
+.tpl-classic .avatar { width:98px; height:98px; border-radius:50%; flex:none; }
+.tpl-classic .name { font:600 30px/1.2 Lora, Georgia, serif; color:var(--side); }
+.tpl-classic .position { color:var(--accent); font-size:15px; font-weight:500; margin-top:3px; }
+.tpl-classic .cts { margin-top:10px; font-size:13px; color:#444; }
+.tpl-classic .sec { margin-top:20px; }
+.tpl-classic .sec h2 { font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--side); margin:0 0 10px; padding-bottom:6px; border-bottom:1px solid #d9dce1; break-after:avoid; }
+.tpl-classic .item { margin-bottom:12px; }
+.tpl-classic .row b { font-weight:700; }
+.tpl-classic .row i { color:#555; }
+.tpl-classic .org { color:var(--accent); font-weight:500; font-style:italic; margin:1px 0 4px; }
+
+/* Template: Hiện đại — header nền màu, timeline */
+.tpl-modern .hd { display:flex; align-items:center; gap:28px; padding:34px 42px; background:var(--side); color:#fff; }
+.tpl-modern .avatar { width:124px; height:124px; border-radius:50%; flex:none; border:4px solid var(--accent); }
+.tpl-modern .hd__txt { flex:1; min-width:0; }
+.tpl-modern .name { font-size:31px; font-weight:700; line-height:1.15; }
+.tpl-modern .position { color:var(--accent); font-size:16px; font-weight:500; margin-top:5px; }
+.tpl-modern .cts { margin-top:14px; font-size:12.5px; color:#e5e7eb; }
+.tpl-modern .cols { display:grid; grid-template-columns:1fr 228px; gap:30px; padding:30px 42px 34px; }
+.tpl-modern aside { border-left:1px solid #e5e7eb; padding-left:24px; }
+.tpl-modern .sec { margin-bottom:22px; }
+.tpl-modern .sec h2 { display:flex; align-items:flex-start; gap:10px; line-height:1.4; font-size:14.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--side); margin:0 0 12px; break-after:avoid; }
+.tpl-modern .sec h2::before { content:""; width:18px; height:4px; border-radius:2px; background:var(--accent); flex:none; margin-top:.55em; }
+.tpl-modern main .item { position:relative; margin-left:5px; padding:0 0 14px 20px; border-left:2px solid #e5e7eb; }
+.tpl-modern main .item:last-child { padding-bottom:2px; }
+.tpl-modern main .item::before { content:""; position:absolute; left:-7px; top:3px; width:12px; height:12px; border-radius:50%; background:#fff; border:3px solid var(--accent); }
+.tpl-modern .row { flex-direction:column; gap:0; }
+.tpl-modern .row i { order:-1; font-style:normal; font-size:12px; font-weight:500; color:var(--accent); }
+.tpl-modern .row b { font-weight:700; font-size:14.5px; }
+.tpl-modern .org { font-weight:500; color:#555; margin-bottom:4px; }
+.tpl-modern aside .yr { flex-direction:column; gap:0; margin-bottom:8px; }
+.tpl-modern aside .yr b { color:var(--accent); }
+
+/* Template: Chuyên nghiệp — tiêu đề mục cột trái */
+.tpl-pro { padding:44px 48px 36px; }
+.tpl-pro .hd { display:flex; align-items:center; gap:28px; padding-left:20px; border-left:5px solid var(--accent); margin-bottom:26px; }
+.tpl-pro .hd__txt { flex:1; min-width:0; }
+.tpl-pro .avatar { width:112px; height:112px; border-radius:14px; flex:none; }
+.tpl-pro .name { font-size:34px; font-weight:700; line-height:1.1; letter-spacing:-.02em; color:var(--side); }
+.tpl-pro .position { font-size:14px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-top:7px; }
+.tpl-pro .cts { margin-top:14px; font-size:12.5px; color:#444; }
+.tpl-pro .sec { display:grid; grid-template-columns:148px 1fr; gap:22px; padding:16px 0; border-top:1px solid #e5e7eb; }
+.tpl-pro .sec h2 { margin:0; font-size:12px; font-weight:700; line-height:1.7; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+.tpl-pro .item { margin-bottom:12px; }
+.tpl-pro .item:last-child { margin-bottom:0; }
+.tpl-pro .row b { font-weight:700; color:var(--side); }
+.tpl-pro .row i { color:#666; font-size:12.5px; }
+.tpl-pro .org { font-weight:500; color:#555; margin-bottom:4px; }
+.tpl-pro .avatar { order:2; }
+.tpl-pro .sec h2 { align-self:start; }
+.cv .row span { min-width:0; }
+
+/* ================= SINH VIÊN ================= */
+/* Năng động — header màu nhấn, nhãn mục dạng pill */
+.tpl-st-bright { font-size:13.5px; line-height:1.5; }
+.tpl-st-bright .hd { position:relative; overflow:hidden; display:flex; align-items:center; gap:26px; padding:34px 40px; background:var(--accent); color:#fff; }
+.tpl-st-bright .hd::after { content:""; position:absolute; right:-70px; top:-90px; width:270px; height:270px; border-radius:50%; background:rgba(255,255,255,.13); }
+.tpl-st-bright .avatar { width:118px; height:118px; border-radius:50%; flex:none; border:4px solid rgba(255,255,255,.9); }
+.tpl-st-bright .hd__txt { position:relative; z-index:1; flex:1; min-width:0; }
+.tpl-st-bright .name { font:800 31px/1.15 "Be Vietnam Pro", Roboto, sans-serif; letter-spacing:-.01em; }
+.tpl-st-bright .position { margin-top:6px; font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
+.tpl-st-bright .cts { margin-top:14px; font-size:12.5px; }
+.tpl-st-bright .cts svg { fill:#fff; }
+.tpl-st-bright .cols { display:grid; grid-template-columns:1fr 236px; gap:26px; padding:28px 40px 34px; }
+.tpl-st-bright .cols > * { min-width:0; }
+.tpl-st-bright aside { align-self:start; padding:18px 18px 4px; border-radius:14px; background:#f4f6f9; }
+.tpl-st-bright .sec { margin-bottom:20px; }
+.tpl-st-bright .sec h2 { display:inline-block; margin:0 0 10px; padding:4px 14px; border-radius:999px; background:var(--accent); color:#fff; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+.tpl-st-bright .item { margin-bottom:12px; }
+.tpl-st-bright .row b, .tpl-st-bright .row span { font-weight:700; color:var(--side); }
+.tpl-st-bright .row i { font-style:normal; font-size:12px; font-weight:600; color:var(--accent); }
+.tpl-st-bright .org { margin-bottom:3px; color:#555; font-weight:500; }
+.tpl-st-bright aside .yr { flex-direction:column; gap:0; margin-bottom:8px; }
+.tpl-st-bright aside .yr b { color:var(--accent); }
+
+/* Campus — sidebar sáng, ảnh tròn */
+.tpl-st-campus { display:grid; grid-template-columns:250px 1fr; font-size:13.5px; line-height:1.5; border-top:6px solid var(--accent); background:linear-gradient(90deg, #f1f5f3 250px, #fff 250px); }
+.tpl-st-campus aside { min-width:0; padding:30px 24px; background:#f1f5f3; }
+.tpl-st-campus main { min-width:0; padding:32px 34px; }
+.tpl-st-campus .avatar { width:150px; height:150px; margin:0 auto; border-radius:50%; border:4px solid #fff; box-shadow:0 0 0 3px var(--accent); }
+.tpl-st-campus aside .name { margin-top:18px; text-align:center; font:700 23px/1.25 "Be Vietnam Pro", Roboto, sans-serif; color:var(--side); }
+.tpl-st-campus aside .position { margin-top:4px; text-align:center; color:var(--accent); font-size:13px; font-weight:600; }
+.tpl-st-campus aside .sec:first-of-type { margin-top:24px; }
+.tpl-st-campus .ct { display:flex; gap:10px; margin-bottom:5px; font-size:12.5px; word-break:break-word; }
+.tpl-st-campus .ct svg { flex:none; width:15px; height:15px; margin-top:2px; fill:var(--accent); }
+.tpl-st-campus .sec { margin-bottom:22px; }
+.tpl-st-campus .sec h2 { display:flex; align-items:center; gap:10px; margin:0 0 10px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--side); }
+.tpl-st-campus .sec h2::before { content:""; flex:none; width:9px; height:9px; border-radius:3px; background:var(--accent); }
+.tpl-st-campus main .sec h2 { padding-bottom:7px; border-bottom:1px solid #e3e7ea; }
+.tpl-st-campus .item { margin-bottom:12px; }
+.tpl-st-campus .row b, .tpl-st-campus .row span { font-weight:700; }
+.tpl-st-campus .row i { color:#666; font-size:12.5px; }
+.tpl-st-campus .org { margin-bottom:3px; color:var(--accent); font-weight:600; }
+
+/* Tối giản — một cột căn giữa */
+.tpl-st-minimal { padding:42px 60px 36px; font-size:13.5px; line-height:1.55; }
+.tpl-st-minimal .hd { display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; }
+.tpl-st-minimal .avatar { width:92px; height:92px; border-radius:50%; }
+.tpl-st-minimal .name { font-size:29px; letter-spacing:.08em; text-transform:uppercase; color:var(--side); }
+.tpl-st-minimal .position { margin-top:4px; color:var(--accent); font-size:13px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; }
+.tpl-st-minimal .cts { justify-content:center; margin-top:12px; font-size:12.5px; color:#555; }
+.tpl-st-minimal .sec { margin-top:22px; }
+.tpl-st-minimal .sec h2 { display:flex; align-items:center; gap:14px; margin:0 0 12px; font-size:12.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); }
+.tpl-st-minimal .sec h2::before, .tpl-st-minimal .sec h2::after { content:""; flex:1; height:1px; background:#dcdfe4; }
+.tpl-st-minimal .item { margin-bottom:12px; }
+.tpl-st-minimal .row b, .tpl-st-minimal .row span { font-weight:700; color:var(--side); }
+.tpl-st-minimal .row i { color:#777; font-size:12.5px; }
+.tpl-st-minimal .org { margin-bottom:3px; font-style:italic; color:#555; }
+
+/* Hành trình — dòng thời gian */
+.tpl-st-journey { padding:40px 48px 36px; font-size:13.5px; line-height:1.5; }
+.tpl-st-journey .hd { display:flex; align-items:center; gap:24px; padding-bottom:22px; border-bottom:1px dashed #d5d9de; }
+.tpl-st-journey .avatar { width:104px; height:104px; border-radius:24px; flex:none; }
+.tpl-st-journey .hd__txt { flex:1; min-width:0; }
+.tpl-st-journey .name { font-size:32px; font-weight:700; line-height:1.15; color:var(--side); }
+.tpl-st-journey .name::after { content:""; display:block; width:56px; height:4px; margin-top:10px; border-radius:2px; background:var(--accent); }
+.tpl-st-journey .position { margin-top:8px; color:var(--accent); font-weight:600; }
+.tpl-st-journey .cts { margin-top:10px; font-size:12.5px; color:#555; }
+.tpl-st-journey .sec { margin-top:20px; }
+.tpl-st-journey .sec h2 { margin:0 0 12px; font-size:17px; font-weight:700; color:var(--side); }
+.tpl-st-journey .item { position:relative; margin-left:6px; padding:0 0 14px 24px; border-left:2px solid #e6e8ec; }
+.tpl-st-journey .item:last-child { padding-bottom:2px; }
+.tpl-st-journey .item::before { content:""; position:absolute; left:-7px; top:3px; width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px #fff; }
+.tpl-st-journey .row { align-items:center; }
+.tpl-st-journey .row b, .tpl-st-journey .row span { font-weight:700; }
+.tpl-st-journey .row i { padding:1px 10px; border-radius:999px; background:#f2f3f5; color:var(--accent); font-style:normal; font-size:12px; font-weight:600; }
+.tpl-st-journey .org { margin:2px 0 3px; color:#555; font-weight:500; }
+
+/* Thẻ màu — hai cột, mỗi mục là một thẻ */
+.tpl-st-card { padding:32px 34px 28px; font-size:13px; line-height:1.5; }
+.tpl-st-card .hd { display:flex; align-items:center; gap:24px; margin-bottom:18px; padding:22px 24px; border-radius:16px; background:var(--side); color:#fff; }
+.tpl-st-card .avatar { width:100px; height:100px; border-radius:16px; flex:none; }
+.tpl-st-card .hd__txt { flex:1; min-width:0; }
+.tpl-st-card .name { font-size:28px; font-weight:700; line-height:1.15; }
+.tpl-st-card .position { margin-top:4px; color:var(--accent); font-weight:600; }
+.tpl-st-card .cts { margin-top:10px; font-size:12px; color:#e5e7eb; }
+.tpl-st-card .cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.tpl-st-card .cols > * { min-width:0; }
+.tpl-st-card .sec { margin-bottom:16px; padding:14px 16px 6px; border-top:4px solid var(--accent); border-radius:14px; background:#f5f6f8; }
+.tpl-st-card .sec h2 { margin:0 0 10px; font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--side); }
+.tpl-st-card .item { margin-bottom:10px; }
+.tpl-st-card .row b, .tpl-st-card .row span { font-weight:700; }
+.tpl-st-card .row i { color:#777; font-size:11.5px; }
+.tpl-st-card .org { margin-bottom:2px; color:var(--accent); font-weight:600; }
+.tpl-st-card .yr { gap:12px; }
+
+/* ================= MỚI TỐT NGHIỆP ================= */
+/* Cân đối — hai cột 60/40 */
+.tpl-fr-balance { padding:40px 46px 34px; font-size:13.5px; line-height:1.5; }
+.tpl-fr-balance .hd { display:flex; align-items:center; gap:26px; margin-bottom:24px; padding-bottom:22px; border-bottom:3px solid var(--side); }
+.tpl-fr-balance .avatar { order:2; width:112px; height:112px; border-radius:50%; flex:none; }
+.tpl-fr-balance .hd__txt { flex:1; min-width:0; }
+.tpl-fr-balance .name { font-size:33px; font-weight:700; line-height:1.1; color:var(--side); }
+.tpl-fr-balance .position { margin-top:6px; color:var(--accent); font-size:16px; font-weight:500; }
+.tpl-fr-balance .cts { display:grid; grid-template-columns:auto auto; justify-content:start; gap:5px 22px; margin-top:12px; font-size:12.5px; color:#444; }
+.tpl-fr-balance .cols { display:grid; grid-template-columns:1.4fr 1fr; gap:32px; }
+.tpl-fr-balance .cols > * { min-width:0; }
+.tpl-fr-balance .sec { margin-bottom:20px; }
+.tpl-fr-balance .sec h2 { display:inline-block; margin:0 0 10px; padding-bottom:4px; border-bottom:3px solid var(--accent); font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--side); }
+.tpl-fr-balance .item { margin-bottom:12px; }
+.tpl-fr-balance .row b, .tpl-fr-balance .row span { font-weight:700; }
+.tpl-fr-balance .row i { color:#777; font-size:12.5px; }
+.tpl-fr-balance .org { margin-bottom:3px; color:var(--accent); font-weight:500; }
+.tpl-fr-balance aside .row { flex-direction:column; gap:0; }
+
+/* Sidebar màu — cột phải nền màu nhấn, tên lớn */
+.tpl-fr-color { display:grid; grid-template-columns:1fr 245px; font-size:13.5px; line-height:1.5; background:linear-gradient(270deg, var(--accent) 245px, #fff 245px); }
+.tpl-fr-color aside { order:2; min-width:0; padding:34px 24px; color:#fff; background:var(--accent); }
+.tpl-fr-color main { min-width:0; padding:36px 34px 34px 42px; }
+.tpl-fr-color .avatar { width:100%; aspect-ratio:1; border-radius:18px; border:4px solid rgba(255,255,255,.35); }
+.tpl-fr-color main .hd { margin-bottom:24px; }
+.tpl-fr-color .name { font-size:38px; font-weight:700; line-height:1.08; letter-spacing:-.02em; color:var(--side); }
+.tpl-fr-color .position { margin-top:8px; color:var(--accent); font-size:16px; font-weight:600; letter-spacing:.04em; }
+.tpl-fr-color .ct { display:flex; gap:10px; margin-bottom:6px; font-size:12.5px; word-break:break-word; }
+.tpl-fr-color .ct svg { flex:none; width:15px; height:15px; margin-top:2px; fill:#fff; }
+.tpl-fr-color aside .sec:first-of-type { margin-top:24px; }
+.tpl-fr-color .sec { margin-bottom:22px; }
+.tpl-fr-color .sec h2 { margin:0 0 10px; font-size:14px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--side); }
+.tpl-fr-color main .sec h2::after { content:""; display:block; width:36px; height:3px; margin-top:6px; border-radius:2px; background:var(--accent); }
+.tpl-fr-color aside .sec h2 { padding-bottom:6px; border-bottom:1px solid rgba(255,255,255,.35); color:#fff; }
+.tpl-fr-color aside .li::before { background:#fff; }
+.tpl-fr-color .item { margin-bottom:12px; }
+.tpl-fr-color .row b, .tpl-fr-color .row span { font-weight:700; }
+.tpl-fr-color .row i { color:#777; font-size:12.5px; }
+.tpl-fr-color .org { margin-bottom:3px; color:var(--accent); font-weight:600; }
+.tpl-fr-color aside .yr { flex-direction:column; gap:0; margin-bottom:8px; }
+
+/* ================= NHIỀU KINH NGHIỆM ================= */
+/* Điều hành — serif, căn giữa */
+.tpl-ex-exec { padding:44px 58px 38px; font-size:13.5px; line-height:1.55; color:#2a2a2a; }
+.tpl-ex-exec .hd { display:flex; flex-direction:column; align-items:center; gap:12px; padding-bottom:18px; border-bottom:2px solid var(--side); text-align:center; }
+.tpl-ex-exec .avatar { width:88px; height:88px; border-radius:50%; }
+.tpl-ex-exec .name { font:600 34px/1.15 "Playfair Display", Lora, Georgia, serif; color:var(--side); }
+.tpl-ex-exec .position { margin-top:8px; color:var(--accent); font-size:12.5px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; }
+.tpl-ex-exec .cts { justify-content:center; margin-top:12px; font-size:12.5px; color:#555; }
+.tpl-ex-exec .sec { margin-top:22px; }
+.tpl-ex-exec .sec h2 { margin:0 0 10px; padding-bottom:6px; border-bottom:1px solid #d8d4cc; font:600 18px/1.3 "Playfair Display", Lora, Georgia, serif; color:var(--side); }
+.tpl-ex-exec .item { margin-bottom:13px; }
+.tpl-ex-exec .row b, .tpl-ex-exec .row span { font-weight:700; color:var(--side); }
+.tpl-ex-exec .row i { color:var(--accent); font-size:12.5px; }
+.tpl-ex-exec .org { margin-bottom:3px; font-style:italic; color:#555; }
+
+/* Doanh nghiệp — header đậm, cột trái năng lực */
+.tpl-ex-corp { display:flex; flex-direction:column; font-size:13.5px; line-height:1.5; }
+.tpl-ex-corp .hd { display:flex; align-items:center; gap:26px; padding:30px 40px; border-bottom:5px solid var(--accent); background:var(--side); color:#fff; }
+.tpl-ex-corp .avatar { width:108px; height:108px; border-radius:10px; flex:none; }
+.tpl-ex-corp .hd__txt { flex:1; min-width:0; }
+.tpl-ex-corp .name { font-size:31px; font-weight:700; line-height:1.15; }
+.tpl-ex-corp .position { margin-top:5px; color:var(--accent); font-size:15px; font-weight:500; letter-spacing:.04em; }
+.tpl-ex-corp .cts { margin-top:12px; font-size:12.5px; color:#dfe3e8; }
+.tpl-ex-corp .cols { flex:1; display:grid; grid-template-columns:230px 1fr; background:linear-gradient(90deg, #f3f4f6 230px, #fff 230px); }
+.tpl-ex-corp .cols > * { min-width:0; }
+.tpl-ex-corp main { padding:28px 40px 30px 30px; }
+.tpl-ex-corp aside { order:-1; padding:28px 22px 30px 28px; }
+.tpl-ex-corp .sec { margin-bottom:22px; }
+.tpl-ex-corp .sec h2 { margin:0 0 10px; padding-bottom:6px; border-bottom:2px solid var(--accent); font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--side); }
+.tpl-ex-corp .item { margin-bottom:13px; }
+.tpl-ex-corp .row b, .tpl-ex-corp .row span { font-weight:700; }
+.tpl-ex-corp .row i { color:#666; font-size:12.5px; }
+.tpl-ex-corp .org { margin-bottom:3px; color:var(--accent); font-weight:600; }
+.tpl-ex-corp aside .yr { flex-direction:column; gap:0; margin-bottom:8px; }
+
+/* Biên niên — cột mốc thời gian bên trái */
+.tpl-ex-chrono { padding:40px 48px 36px; border-top:10px solid var(--accent); font-size:13.5px; line-height:1.5; }
+.tpl-ex-chrono .hd { display:flex; align-items:center; gap:26px; margin-bottom:10px; }
+.tpl-ex-chrono .avatar { order:2; width:104px; height:104px; border-radius:50%; flex:none; }
+.tpl-ex-chrono .hd__txt { flex:1; min-width:0; }
+.tpl-ex-chrono .name { font-size:36px; font-weight:700; line-height:1.1; letter-spacing:-.02em; color:var(--side); }
+.tpl-ex-chrono .position { margin-top:6px; color:var(--accent); font-size:16px; font-weight:500; }
+.tpl-ex-chrono .cts { margin-top:12px; font-size:12.5px; color:#555; }
+.tpl-ex-chrono .sec { margin-top:22px; }
+.tpl-ex-chrono .sec h2 { display:flex; align-items:center; gap:14px; margin:0 0 12px; font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--side); }
+.tpl-ex-chrono .sec h2::after { content:""; flex:1; height:2px; background:#e5e7eb; }
+.tpl-ex-chrono .sec__body { padding-left:162px; }
+.tpl-ex-chrono .item, .tpl-ex-chrono .yr { position:relative; }
+.tpl-ex-chrono .item { margin-bottom:14px; }
+.tpl-ex-chrono .row i { position:absolute; left:-162px; top:2px; width:150px; color:var(--accent); font-style:normal; font-size:12px; font-weight:600; }
+.tpl-ex-chrono .row b, .tpl-ex-chrono .row span { font-weight:700; font-size:14.5px; color:var(--side); }
+.tpl-ex-chrono .org { margin-bottom:4px; color:#555; font-weight:500; }
+.tpl-ex-chrono .yr b { position:absolute; left:-162px; width:150px; color:var(--accent); }
+
+/* Súc tích — mật độ cao, tiêu đề dải màu */
+.tpl-ex-compact { padding:32px 40px 28px; font-size:12.5px; line-height:1.45; }
+.tpl-ex-compact .hd { display:flex; align-items:center; gap:20px; margin-bottom:4px; padding-bottom:14px; border-bottom:2px solid var(--side); }
+.tpl-ex-compact .avatar { width:76px; height:76px; border-radius:8px; flex:none; }
+.tpl-ex-compact .hd__txt { flex:1; min-width:0; display:grid; grid-template-columns:1fr auto; align-items:center; gap:0 20px; }
+.tpl-ex-compact .name { grid-column:1; font-size:27px; font-weight:700; line-height:1.15; color:var(--side); }
+.tpl-ex-compact .position { grid-column:1; color:var(--accent); font-size:13.5px; font-weight:600; }
+.tpl-ex-compact .cts { grid-column:2; grid-row:1 / span 2; flex-direction:column; align-items:flex-end; gap:2px; font-size:12px; color:#444; }
+.tpl-ex-compact .sec { margin-top:14px; }
+.tpl-ex-compact .sec h2 { margin:0 0 8px; padding:4px 10px; border-left:5px solid var(--accent); background:var(--side); color:#fff; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.tpl-ex-compact .item { margin-bottom:9px; }
+.tpl-ex-compact .row b, .tpl-ex-compact .row span { font-weight:700; }
+.tpl-ex-compact .row i { color:#666; font-size:11.5px; }
+.tpl-ex-compact .org { color:var(--accent); font-weight:600; }
+.tpl-ex-compact .gap { height:6px; }
+</style>
+
+<style>
+/* ============================================================
+   PaNIC CV STUDIO · "Indigo Ink" identity
+   Single-file. Light/Dark. Giao diện editor — template CV nằm trong #cv-style.
+   ============================================================ */
+:root{
+  --accent:#7B7BFF; --accent-deep:#4F46E5; --accent-soft:rgba(123,123,255,.16); --accent-ink:#FFFFFF; --accent-glow:rgba(99,102,241,.55);
+  --ok:#3DD68C; --danger:#F0616D;
+  --radius:16px; --radius-sm:11px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,sans-serif;
+  --topbar:68px;
+}
+[data-theme="dark"]{
+  --bg:#0A0B12; --bg-2:#0F1020; --grid:rgba(123,123,255,.05);
+  --surface:rgba(22,26,36,.72); --surface-solid:#171B26; --surface-2:rgba(255,255,255,.035);
+  --field:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.15);
+  --ink:#EEF1F7; --muted:#9BA3B7; --faint:#666E84;
+  --canvas:#07090D; --dot:rgba(255,255,255,.07);
+  --shadow:0 24px 60px -24px rgba(0,0,0,.7);
+  --paper-shadow:0 30px 80px -20px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.05);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#EEF0F5; --bg-2:#F7F8FB; --grid:rgba(20,24,36,.04);
+  --surface:rgba(255,255,255,.85); --surface-solid:#FFFFFF; --surface-2:#F4F5F8;
+  --field:#FFFFFF;
+  --border:rgba(16,24,40,.09); --border-strong:rgba(16,24,40,.18);
+  --ink:#151A26; --muted:#5A6378; --faint:#949DB0;
+  --accent:#4F46E5; --accent-deep:#4338CA; --accent-soft:rgba(79,70,229,.10); --accent-ink:#FFFFFF; --accent-glow:rgba(79,70,229,.45);
+  --canvas:#E2E5EB; --dot:rgba(16,24,40,.09);
+  --shadow:0 20px 50px -24px rgba(30,40,70,.3);
+  --paper-shadow:0 24px 60px -24px rgba(30,40,70,.35),0 0 0 1px rgba(16,24,40,.05);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.45 var(--font);color:var(--ink);overflow:hidden;
+  background:
+    radial-gradient(1000px 600px at 12% -10%,rgba(99,102,241,.16),transparent 60%),
+    radial-gradient(900px 600px at 95% 0%,rgba(45,212,191,.07),transparent 55%),
+    linear-gradient(180deg,var(--bg-2),var(--bg));
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body::before{ /* fine grid texture */
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(circle at 25% 20%,#000,transparent 75%);
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none;padding:0}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:20px;border:3px solid transparent;background-clip:content-box}
+:focus,:focus-visible{outline:none}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.spacer{flex:1}
+
+/* ---------- topbar ---------- */
+.topbar{position:relative;z-index:10;height:var(--topbar);display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid var(--border);background:var(--surface);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand__logo{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:linear-gradient(145deg,var(--accent),var(--accent-deep));color:var(--accent-ink);font-weight:800;font-size:15px;letter-spacing:-.02em;box-shadow:0 8px 22px -6px var(--accent-glow)}
+.brand__title{font-size:15.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.brand__sub{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.progress{display:flex;align-items:center;gap:10px;padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:var(--surface-2);font-size:12.5px;color:var(--muted);font-weight:600}
+.progress__bar{width:110px;height:6px;border-radius:9px;background:var(--border);overflow:hidden}
+.progress__bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width .5s var(--ease)}
+.progress b{color:var(--ink);font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--faint);font-weight:600;white-space:nowrap;margin:0 4px}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.chip.saving::before{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.chip.error{color:var(--danger)}
+.chip.error::before{background:var(--danger);box-shadow:0 0 10px var(--danger)}
+.toolbtn{height:40px;min-width:40px;padding:0 12px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);font-weight:600;font-size:13px;white-space:nowrap;cursor:pointer;user-select:none;transition:transform .15s var(--ease),border-color .2s,background .2s}
+.toolbtn:hover{transform:translateY(-1px);border-color:var(--border-strong)}
+.toolbtn:active{transform:translateY(0)}
+.toolbtn.primary{background:linear-gradient(145deg,var(--accent),var(--accent-deep));border-color:transparent;color:var(--accent-ink);box-shadow:0 10px 24px -10px var(--accent-glow)}
+.toolbtn.sm{height:32px;min-width:32px;padding:0 10px;border-radius:9px;font-size:12px;gap:6px}
+.toolbtn.sm svg.i{width:15px;height:15px}
+
+/* ---------- menus ---------- */
+.menu{position:relative}
+.menu>summary{list-style:none}
+.menu>summary::-webkit-details-marker{display:none}
+.menu[open]>summary{border-color:var(--border-strong)}
+.menu__pop{position:absolute;right:0;top:calc(100% + 8px);width:290px;padding:6px;border-radius:14px;background:var(--surface-solid);border:1px solid var(--border-strong);box-shadow:var(--shadow);z-index:20;animation:pop .18s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}}
+.menu__item{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border-radius:10px;text-align:left;cursor:pointer;transition:background .15s}
+.menu__item:hover{background:var(--surface-2)}
+.menu__item .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.menu__item b{display:block;font-size:13.5px;font-weight:600}
+.menu__item small{display:block;color:var(--faint);font-size:11.5px;margin-top:1px}
+.menu__item.danger .ico{background:rgba(240,97,109,.12);color:var(--danger)}
+.menu__sep{height:1px;background:var(--border);margin:6px 4px}
+.menu__pop.left{left:0;right:auto}
+.tpl-pop{width:700px;padding:12px;max-height:calc(100vh - 190px);display:flex;flex-direction:column}
+.aud-tabs{display:flex;width:100%}
+.aud-tabs button{flex:1}
+.aud-hint{margin:10px 4px 12px;font-size:12px;line-height:1.5;color:var(--muted)}
+.tpl-grid{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:2px 4px 4px 0}
+.tplcard{display:block;min-width:0;text-align:left;padding:8px 8px 10px;border-radius:12px;border:1.5px solid var(--border);transition:border-color .2s,background .2s}
+.tplcard:hover{border-color:var(--border-strong);background:var(--surface-2)}
+.tplcard.active{border-color:var(--accent);background:var(--accent-soft)}
+.tplcard .thumb{height:180px;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--border)}
+.tplcard .thumb>div{width:794px;transform:scale(.25);transform-origin:top left;pointer-events:none}
+.tplcard b{display:block;font-size:13px;font-weight:650;margin:9px 2px 1px}
+.tplcard small{display:block;color:var(--faint);font-size:11.5px;line-height:1.35;margin:0 2px}
+
+/* ---------- layout ---------- */
+.app{position:relative;z-index:1;height:calc(100vh - var(--topbar));display:grid;grid-template-columns:72px minmax(380px,470px) 1fr;grid-template-rows:minmax(0,1fr)}
+.app>*{min-height:0}
+.rail{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 0;border-right:1px solid var(--border);overflow-y:auto}
+.rail button{position:relative;width:48px;height:48px;border-radius:13px;display:grid;place-items:center;color:var(--faint);transition:background .2s,color .2s}
+.rail button:hover{color:var(--ink);background:var(--surface-2)}
+.rail button.active{color:var(--accent);background:var(--accent-soft)}
+.rail .dot{position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--border-strong);transition:background .3s}
+.rail .dot.ok{background:var(--ok)}
+
+/* ---------- editor ---------- */
+.editor{position:relative;overflow-y:auto;padding:20px 18px 80px;border-right:1px solid var(--border)}
+.editor__head{margin:0 4px 16px}
+.eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.editor__head h2{margin:4px 0 3px;font-size:21px;font-weight:700;letter-spacing:-.02em}
+.editor__head p{margin:0;color:var(--muted);font-size:12.5px}
+.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(12px);margin-bottom:10px;transition:border-color .2s,box-shadow .3s}
+.card.open{border-color:var(--border-strong);box-shadow:var(--shadow)}
+.card__head{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left}
+.card__ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface-2);color:var(--muted);flex:none;transition:background .2s,color .2s}
+.card.open .card__ico,.card__head:hover .card__ico{background:var(--accent-soft);color:var(--accent)}
+.card__title{flex:1;min-width:0}
+.card__title b{display:block;font-size:14px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card__title small{display:block;font-size:11.5px;color:var(--faint);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card__chev{color:var(--faint);display:grid;transition:transform .25s var(--ease)}
+.card.open .card__chev{transform:rotate(180deg)}
+.card__body{display:none;padding:2px 14px 16px}
+.card.open .card__body{display:block;animation:fade .25s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}}
+
+.f{display:block;margin-bottom:12px;min-width:0}
+.f>span{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.f input,.f textarea{display:block;width:100%;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--field);font-size:13.5px;line-height:1.55;outline:none}
+.f textarea{resize:vertical;min-height:110px}
+.f ::placeholder{color:var(--faint)}
+.f__top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.f__top>span{font-size:11.5px;font-weight:600;color:var(--muted)}
+.fmt{display:flex;gap:4px}
+.fmt button{height:26px;padding:0 8px;border-radius:7px;display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--muted);border:1px solid var(--border);background:var(--surface-2);transition:color .15s,border-color .15s}
+.fmt button:hover{color:var(--accent);border-color:var(--accent)}
+.fmt svg.i{width:13px;height:13px;stroke-width:2.2}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.title-f{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:14px;border-radius:10px;background:var(--surface-2);border:1px dashed var(--border-strong)}
+.title-f span{font-size:11.5px;color:var(--faint);font-weight:600;white-space:nowrap}
+.title-f input{flex:1;min-width:0;border:none;background:none;outline:none;font-weight:600;font-size:13px}
+
+.avatar-drop{display:flex;align-items:center;gap:14px;padding:12px;margin-bottom:14px;border-radius:14px;border:1.5px dashed var(--border-strong);background:var(--surface-2);transition:border-color .2s,background .2s}
+.avatar-drop.drag{border-color:var(--accent);background:var(--accent-soft)}
+.avatar-drop__img{width:76px;height:76px;border-radius:14px;flex:none;background:var(--field) center/cover no-repeat;display:grid;place-items:center;color:var(--faint);border:1px solid var(--border)}
+.avatar-drop__img svg.i{width:26px;height:26px}
+.avatar-drop b{display:block;font-size:13.5px}
+.avatar-drop small{display:block;color:var(--faint);font-size:11.5px;margin:2px 0 9px}
+.avatar-drop .row{display:flex;gap:6px;flex-wrap:wrap}
+
+.entry{border:1px solid var(--border);border-radius:13px;background:var(--surface-2);padding:10px 12px 0;margin-bottom:10px}
+.entry__head{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.entry__num{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;flex:none;margin-right:2px}
+.entry__label{flex:1;min-width:0;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry__head button{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:var(--faint);transition:background .15s,color .15s}
+.entry__head button:hover{background:var(--surface-solid);color:var(--ink)}
+.entry__head button.del:hover{color:var(--danger)}
+.entry__head svg.i{width:15px;height:15px}
+.add{width:100%;height:42px;border-radius:12px;border:1.5px dashed var(--border-strong);color:var(--muted);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;transition:border-color .2s,color .2s,background .2s}
+.add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.empty-note{text-align:center;color:var(--faint);font-size:12.5px;padding:4px 0 12px}
+
+/* ---------- preview ---------- */
+.preview{position:relative;display:flex;flex-direction:column;min-width:0;background:radial-gradient(var(--dot) 1px,transparent 1px) 0 0/20px 20px,var(--canvas)}
+.ptools{position:relative;z-index:5;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--surface);backdrop-filter:blur(16px)}
+.grp{display:flex;align-items:center;gap:7px}
+.lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-right:3px}
+.vsep{width:1px;height:24px;background:var(--border)}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:3px}
+.seg button{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);transition:color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button.active{background:linear-gradient(145deg,var(--accent),var(--accent-deep));color:var(--accent-ink);box-shadow:0 4px 12px -4px var(--accent-glow)}
+.sw{position:relative;width:22px;height:22px;border-radius:50%;flex:none;border:2px solid var(--surface-solid);box-shadow:0 0 0 1px var(--border-strong);cursor:pointer;transition:transform .15s var(--ease),box-shadow .15s}
+.sw:hover{transform:scale(1.12)}
+.sw.active{box-shadow:0 0 0 2px var(--ink)}
+.sw-custom{overflow:hidden;background:conic-gradient(#f43f5e,#f59e0b,#84cc16,#06b6d4,#8b5cf6,#f43f5e)}
+.sw-custom input{position:absolute;inset:-8px;width:40px;height:40px;opacity:0;cursor:pointer}
+.pages{font-size:12px;color:var(--faint);font-weight:600;white-space:nowrap}
+.zoom output{min-width:44px;text-align:center;font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.scroll{flex:1;min-height:0;overflow:auto;padding:32px 24px 60px}
+.stage{position:relative;margin:0 auto}
+.paper{position:absolute;top:0;left:0;transform-origin:top left;box-shadow:var(--paper-shadow)}
+.guides{position:absolute;inset:0;pointer-events:none}
+.guides i{position:absolute;left:0;right:0;border-top:2px dashed rgba(99,102,241,.9)}
+.guides i::after{content:attr(data-p);position:absolute;right:8px;top:4px;padding:2px 8px;border-radius:6px;background:rgba(79,70,229,.95);color:#fff;font:700 11px/1.4 var(--font);font-style:normal}
+
+/* ---------- toast & mobile ---------- */
+.dlg{width:min(420px,calc(100vw - 32px));padding:0;border:1px solid var(--border-strong);border-radius:18px;background:var(--surface-solid);color:var(--ink);box-shadow:var(--shadow)}
+.dlg[open]{animation:pop .2s var(--ease)}
+.dlg::backdrop{background:rgba(5,7,12,.55);backdrop-filter:blur(3px)}
+.dlg__body{display:flex;gap:14px;padding:22px 22px 8px}
+.dlg__ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--accent-soft);color:var(--accent)}
+.dlg.danger .dlg__ico{background:rgba(240,97,109,.12);color:var(--danger)}
+.dlg h3{margin:2px 0 4px;font-size:16px;font-weight:700}
+.dlg p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.dlg__acts{display:flex;justify-content:flex-end;gap:8px;padding:16px 22px 20px}
+.dlg.danger .toolbtn.primary{background:var(--danger);box-shadow:0 10px 24px -10px rgba(240,97,109,.6);color:#fff}
+.toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:50;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:var(--surface-solid);border:1px solid var(--border-strong);box-shadow:var(--shadow);font-size:13px;font-weight:600;animation:pop .25s var(--ease)}
+.toast svg.i{color:var(--ok)}
+.toast.error svg.i{color:var(--danger)}
+.mtabs{display:none}
+@media (max-width:1180px){ .app{grid-template-columns:64px minmax(340px,420px) 1fr} .progress{display:none} }
+@media (max-width:860px){
+  body{overflow:auto}
+  .topbar{padding:0 12px;gap:8px}
+  .brand__sub,.chip,.topbar .txt{display:none}
+  .app{grid-template-columns:1fr;height:auto;min-height:calc(100vh - var(--topbar))}
+  .rail{display:none}
+  .editor{border-right:none;padding:16px 12px 100px}
+  body[data-view="edit"] .preview{display:none}
+  body[data-view="preview"] .editor{display:none}
+  .preview{min-height:calc(100vh - var(--topbar))}
+  .scroll{padding:20px 12px 100px}
+  .mtabs{display:inline-flex;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;background:var(--surface-solid);box-shadow:var(--shadow)}
+  .mtabs button{padding:10px 20px;font-size:13px}
+  .grid2{grid-template-columns:1fr}
+}
+
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff}
+  body::before,.topbar,.rail,.editor,.ptools,.mtabs,.toasts,.guides{display:none!important}
+  .app{display:block;height:auto}
+  .preview{display:block!important;background:none}
+  .scroll{padding:0;overflow:visible}
+  .stage{width:auto!important;height:auto!important}
+  .paper{position:static;transform:none!important;box-shadow:none}
+}
+</style>
+<style id="page-style"></style>
+</head>
+<body data-view="edit">
+<header class="topbar">
+  <div class="brand">
+    <img class="brand__logo" src="assets/logo.svg" alt="">
+    <div><div class="brand__title">PaNIC CV Studio</div><div class="brand__sub">Trình tạo CV</div></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="progress" title="Số mục đã điền / tổng số mục"><span>Hoàn thiện</span><div class="progress__bar"><i id="progBar"></i></div><b id="progTxt">0%</b></div>
+  <span class="chip" id="saveChip">Đã lưu</span>
+  <button class="toolbtn" data-act="theme" id="themeBtn" title="Đổi giao diện sáng / tối" aria-label="Đổi giao diện sáng / tối"></button>
+  <details class="menu">
+    <summary class="toolbtn" title="Sao lưu & dữ liệu" id="dataBtn"></summary>
+    <div class="menu__pop" id="dataMenu"></div>
+  </details>
+  <details class="menu">
+    <summary class="toolbtn primary" id="exportBtn"></summary>
+    <div class="menu__pop" id="exportMenu"></div>
+  </details>
+</header>
+
+<div class="app">
+  <nav class="rail" id="rail" aria-label="Các mục CV"></nav>
+  <form class="editor" id="editor" onsubmit="return false"></form>
+  <section class="preview" aria-label="Xem trước CV">
+    <div class="ptools">
+      <div class="grp"><span class="lbl">Mẫu</span><details class="menu" id="tplMenu"><summary class="toolbtn sm" id="tplBtn"></summary><div class="menu__pop left tpl-pop" id="tplPop"></div></details></div>
+      <div class="vsep"></div>
+      <div class="grp"><span class="lbl">Màu nhấn</span><span class="grp" id="accentSw"></span></div>
+      <div class="vsep"></div>
+      <div class="grp"><span class="lbl">Màu phụ</span><span class="grp" id="sideSw"></span></div>
+      <div class="spacer"></div>
+      <span class="pages" id="pages"></span>
+      <div class="grp zoom">
+        <button class="toolbtn sm" data-act="zoomOut" title="Thu nhỏ" aria-label="Thu nhỏ">−</button>
+        <output id="zoomTxt">100%</output>
+        <button class="toolbtn sm" data-act="zoomIn" title="Phóng to" aria-label="Phóng to">+</button>
+        <button class="toolbtn sm" data-act="zoomFit">Vừa khung</button>
+      </div>
+    </div>
+    <div class="scroll" id="scroll"><div class="stage" id="stage"><div class="paper" id="paper"></div></div></div>
+  </section>
+</div>
+
+<div class="seg mtabs" id="mtabs">
+  <button data-act="view" data-v="edit" class="active">Soạn thảo</button>
+  <button data-act="view" data-v="preview">Xem trước</button>
+</div>
+<dialog class="dlg" id="dlg"><form method="dialog">
+  <div class="dlg__body"><span class="dlg__ico" id="dlgIco"></span><div><h3 id="dlgTitle"></h3><p id="dlgMsg"></p></div></div>
+  <div class="dlg__acts"><button class="toolbtn" value="no">Hủy</button><button class="toolbtn primary" value="yes" id="dlgOk"></button></div>
+</form></dialog>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+const ICON = {
+  phone: '<path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/>',
+  mail: '<path d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/>',
+  pin: '<path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>',
+  cake: '<path d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V8h14z"/>',
+  web: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4c.8 1.2 1.5 2.5 1.9 4h-3.8c.4-1.5 1.1-2.8 1.9-4zM4.3 14a8.2 8.2 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4zm.8 2h3a15.7 15.7 0 0 0 1.4 3.6A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.3-3.6C8.9 5.5 8.4 6.7 8.1 8zM12 20c-.8-1.2-1.5-2.5-1.9-4h3.8c-.4 1.5-1.1 2.8-1.9 4zm2.3-6H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h3a8 8 0 0 1-4.4 3.6zm1.8-5.6a16.5 16.5 0 0 0 0-4h3.4a8.2 8.2 0 0 1 0 4z"/>',
+};
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+
+// Định dạng ô văn bản: **đậm**; dòng bắt đầu bằng "- ", "• " hoặc "+ " là gạch đầu dòng (vẽ thành chấm tròn); dòng trống là khoảng cách
+function rich(text) {
+  const t = String(text ?? '').trim();
+  if (!t) return '';
+  return t.split('\n').map(raw => {
+    const line = raw.replace(/^(\s*\*\*)\s*[+\-•]\s*/, '$1'); // "**+ Tiêu đề**" → "**Tiêu đề**"
+    const bullet = /^\s*[-•+]\s+/.test(line);
+    const html = esc(line.replace(/^\s*[-•+]\s+/, '')).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    if (bullet) return `<div class="li">${html}</div>`;
+    return line.trim() ? `<div>${html}</div>` : '<div class="gap"></div>';
+  }).join('');
+}
+console.assert(rich('  \n ') === '', 'rich() empty');
+console.assert(rich('**+ a**\n+ b\n- c\n\nd<x>') === '<div><b>a</b></div><div class="li">b</div><div class="li">c</div><div class="gap"></div><div>d&lt;x&gt;</div>', 'rich() self-check');
+
+const TITLES = {
+  info: 'Thông tin cá nhân', skills: 'Các kỹ năng', objective: 'Mục tiêu nghề nghiệp', experience: 'Kinh nghiệm làm việc',
+  education: 'Học vấn', awards: 'Danh hiệu và giải thưởng', certificates: 'Chứng chỉ', hobbies: 'Sở thích', more: 'Thông tin thêm',
+  projects: 'Dự án', activities: 'Hoạt động', languages: 'Ngoại ngữ', references: 'Người tham chiếu',
+};
+
+const EMPTY = {
+  template: 'dark', accent: '#f39c12', side: '#343a3d', avatar: '',
+  name: '', position: '', phone: '', email: '', address: '', dob: '', website: '',
+  titles: { ...TITLES }, skills: '', objective: '',
+  experience: [], education: [], awards: [], certificates: [], hobbies: '', more: '',
+  projects: [], activities: [], languages: '', references: '',
+};
+
+const SAMPLE = {
+  ...EMPTY, titles: { ...TITLES },
+  name: 'NGUYỄN ĐỨC PHÒNG', phone: '0906494320', email: 'nguyenducphong@gmail.com',
+  address: 'Thái Cẩm, Phường Điện Bàn Bắc - TP Đà Nẵng',
+  skills: `**Kĩ năng đọc, phân tích và thiết kế sản phẩm theo bản vẽ**
+- Kĩ năng đọc và hình dung bản vẽ ở mức độ khá.
+- Hiểu các góc nhìn trong bản vẽ.
+- Hiểu được các kí hiệu hình học và dung sai cho phép trên bản vẽ.
+- Đã thiết kế được nhiều chi tiết từ cơ bản tới phức tạp sử dụng phần mềm CATIA và NX.
+- Thiết kế được nhiều chi tiết như chi tiết máy, chi tiết dân dụng và chi tiết cho nha khoa.
+- Thành thạo các lệnh từ cơ bản tới nâng cao hỗ trợ trong việc vẽ trong môi Part Design và Suface trên phần mềm CATIA và NX.
+- Xuất bản vẽ trên CATIA và NX.
+
+**Kĩ năng lắp ráp bằng phần mềm**
+- Sử dụng và thao tác thuần thục lắp ráp chi tiết trên phần mềm CATIA.
+- Nắm được các kí hiệu hình học về dung sai lắp ghép.
+
+**Kĩ năng lập trình gia công**
+- Hiểu cách sử dụng lệnh và làm chương trình máy CNC 3 axis với những chi tiết đơn giản.
+- Đang tiếp tục học và hoàn thiện kĩ năng lập trình gia công 3 axis và sẽ tiếp tục học nâng cao về lập trình 4 axis và 5 axis dùng phần mềm CATIA.
+
+**ĐỌC DATASHEET.**
+- Có thể đọc hiểu một vài các thông số của linh kiện.
+
+**Vẽ và thiết kế board mạch điện tử.**
+- Tự thiết kế hệ thống và tạo ra một mạch in hoàn chỉnh.
+
+**Lập trình trên Arduino.**
+- Đọc dữ liệu và xử lý dữ liệu từ các cảm biến gửi về hệ thống chính.
+- Tạo được chương trình điều khiển qua smartphone.
+
+**NGÔN NGỮ LẬP TRÌNH**
+- Có kiến thức cơ bản về ngôn ngữ lập trình C, C++.
+- Sử dụng ngôn ngữ lập trình C lập trình cho IC họ nhà 89XX.
+- Biết sử dụng ngôn ngữ lập trình LADDER của PLC.`,
+  objective: `**Ngắn hạn:**
+- Được công ty nhận vào làm việc và trở thành nhân viên chính thức của công ty.
+- Được mọi người tiếp nhận và chỉ bảo để hoàn thành công việc một cách tốt nhất.
+**Dài hạn:**
+- Được làm việc trong môi trường năng động, được học hỏi để nâng cao trình độ.
+- Được gắn bó lâu dài và tạo ra nhiều giá trị cho công ty.
+- Được ban lãnh đạo công ty ghi nhận cân nhắc vào đội ngũ lãnh đạo cấp cao.`,
+  experience: [
+    { title: 'Thực tập sinh', from: '20/08/2022', to: '20/10/2022', company: 'CÔNG TY TNHH ICT VINA',
+      desc: '- Tham quan công ty\n- Học hỏi và tìm hiểu cách tạo ra một sản phẩm chất lượng' },
+    { title: 'Nhân viên kĩ thuật', from: '04/2023', to: '09/2023', company: 'CÔNG TY TRÁCH NHIỆM HỮU HẠN MABUCHI MOTOR ĐÀ NẴNG',
+      desc: '- Làm đen chi tiết khi gia công hoàn thiện.\n- Vận hành máy gia công nhiệt luyện các vật liệu.\n- Đọc bản vẽ gia công cơ khí và cắt vật liệu.\n- Biết sử dụng các dụng cụ đo đạc trong cơ khí.' },
+    { title: 'Nhân Viên', from: '9/2023', to: '04/2025', company: 'CÔNG TY TNHH UNIVERSAL ALLOY CORPORATION VIETNAM',
+      desc: `- Nhân viên vận hành gia công trên máy CNC Chiron Mill 3000.
+- Sơn sửa bề mặt vật liệu Composites.
+- Tích keo điền kín lỗ khí vật liệu Composites.
+- Đọc bản vẽ và gá đặt khuôn để gia công chi tiết.
+- Thiết kế và gia công chi tiết hỗ trợ trong việc sản xuất.
+- Cải tiến quy trình sản xuất của xưởng.
+- Cải tiến thời gian sản xuất trong xưởng.
+- Quản lí và phân công công việc trong tổ.
+- Tiến hành đánh giá và báo cáo các vấn đề phát sinh khi sản xuất cho cấp trên.
+- Sử dụng các dụng cụ đo kiểm tra đo đạc các kích thước sản phẩm.` },
+    { title: 'Nhân Viên', from: '07/2026', to: 'Hiện tại', company: 'CÔNG TY TNHH ICT Vina',
+      desc: '- Vận hành máy tiện CNC.\n- Đọc bản vẽ kĩ thuật 2D.\n- Đọc và chỉnh sửa NC-Code.' },
+  ],
+  education: [
+    { major: 'Chuyên Ngành: Điện tử công nghiệp', from: '09/2020', to: '03/2023', school: 'Trường Cao Đẳng nghề Đà Nẵng',
+      desc: '- Tốt nghiệp đạt trình độ Kĩ Sư Thực Hành\n- Xếp loại: Xuất sắc\n- Dành được học bổng xuất sắc toàn khoa năm 2023.' },
+  ],
+  awards: [{ year: '2023', name: 'Học bổng xuất sắc toàn khoa' }],
+  certificates: [{ year: '2020', name: 'Có bằng chứng chỉ CNTT cơ bản.' }],
+  hobbies: '- Tìm tòi học hỏi những cái mới giúp phát triển bản thân.\n- Đá bóng.\n- Cầu lông.\n- Khám phá và trải nghiệm những cung đường đẹp.',
+  more: `**Ưu điểm:**
+- Cẩn thận, chịu khó và ham học hỏi.
+- Khả năng học hỏi và tiếp thu kiến thức nhanh.
+- Luôn muốn phát triển bản thân hơn mỗi ngày.
+- Chịu được áp lực công việc cao.
+- Hòa đồng và thích làm việc nhóm.
+- Trình độ tiếng Anh đạt ở mức giao tiếp và đọc tài liệu cơ bản.
+- Thiết kế và hoàn thiện đồ án mô phỏng chuyển động động cơ 4 xy-lanh của ôtô.
+- Thiết kế nhiều chi tiết máy cho sinh viên cơ khí các trường trên địa bàn.
+**Nhược điểm:**
+- Hạn chế bởi bằng cấp chuyên môn.
+- Khả năng giao tiếp tiếng Anh còn kém và thiếu tự tin.
+- Chưa làm việc đúng chuyên môn.
+**Mục tiêu hướng tới:**
+- Tiếp tục học tiếng Anh giao tiếp và hoàn thiện các kĩ năng còn kém.
+- Tiếp tục học hỏi, nâng cao khả năng xử lí bản vẽ và tối ưu thời gian thiết kế các chi tiết phức tạp.
+- Nâng cao kĩ năng lập trình gia công và liên tục học hỏi để nâng cao kĩ năng lập trình gia công.
+- Được làm việc ở công ty với đúng chuyên môn.
+- Tiếp tục học hỏi nhiều kiến thức mới, liên tục trau dồi kinh nghiệm và được đề cử những vị trí công việc yêu cầu trình độ cao hơn.`,
+};
+
+// Các mục dạng danh sách: [khóa, nhãn, kiểu]
+const LISTS = {
+  experience: [['title', 'Vị trí'], ['company', 'Công ty'], ['from', 'Từ'], ['to', 'Đến'], ['desc', 'Mô tả công việc / thành tích', 'area']],
+  education: [['major', 'Chuyên ngành'], ['school', 'Trường'], ['from', 'Từ'], ['to', 'Đến'], ['desc', 'Mô tả / thành tích', 'area']],
+  projects: [['name', 'Tên dự án'], ['role', 'Vai trò'], ['from', 'Từ'], ['to', 'Đến'], ['desc', 'Mô tả / công nghệ / kết quả', 'area']],
+  activities: [['role', 'Vai trò'], ['org', 'Tổ chức / CLB'], ['from', 'Từ'], ['to', 'Đến'], ['desc', 'Mô tả', 'area']],
+  awards: [['year', 'Năm'], ['name', 'Tên giải thưởng']],
+  certificates: [['year', 'Năm'], ['name', 'Tên chứng chỉ']],
+};
+
+// ---------- Templates: thêm mẫu mới = thêm 1 entry + CSS .tpl-<key> trong #cv-style ----------
+const section = (title, body) => body ? `<section class="sec"><h2>${esc(title)}</h2><div class="sec__body">${body}</div></section>` : '';
+const range = (a, b) => [a, b].filter(Boolean).map(esc).join('&nbsp; - &nbsp;');
+const SEC_IDS = ['objective', 'experience', 'education', 'projects', 'activities', 'skills', 'languages', 'awards', 'certificates', 'hobbies', 'references', 'more'];
+
+// Các khối nội dung dùng chung; mỗi template chỉ sắp xếp và tạo kiểu khác nhau
+function parts(d) {
+  const entries = (list, head, org) => list.filter(e => Object.values(e).some(v => v.trim())).map(e => `<div class="item">
+      <div class="row">${head(e)}<i>${range(e.from, e.to)}</i></div>
+      ${org(e) ? `<div class="org">${esc(org(e))}</div>` : ''}<div class="desc">${rich(e.desc)}</div></div>`).join('');
+  const years = list => list.filter(x => x.year || x.name).map(x => `<div class="yr"><b>${esc(x.year)}</b><span>${esc(x.name)}</span></div>`).join('');
+  return {
+    t: d.titles,
+    style: `--accent:${d.accent};--side:${d.side}`,
+    avatar: `<div class="avatar${d.avatar ? '' : ' empty'}"${d.avatar ? ` style="background-image:url('${d.avatar}')"` : ''}></div>`,
+    name: `<div class="name">${esc(d.name)}</div>${d.position ? `<div class="position">${esc(d.position)}</div>` : ''}`,
+    contact: [['phone', d.phone], ['mail', d.email], ['pin', d.address], ['cake', d.dob], ['web', d.website]]
+      .filter(x => x[1]).map(([ic, v]) => `<div class="ct"><svg viewBox="0 0 24 24">${ICON[ic]}</svg><span>${esc(v)}</span></div>`).join(''),
+    skills: rich(d.skills), objective: rich(d.objective), hobbies: rich(d.hobbies), more: rich(d.more),
+    languages: rich(d.languages), references: rich(d.references),
+    experience: entries(d.experience, e => `<b>${esc(e.title)}</b>`, e => e.company),
+    education: entries(d.education, e => `<span>${esc(e.major)}</span>`, e => e.school),
+    projects: entries(d.projects, e => `<b>${esc(e.name)}</b>`, e => e.role),
+    activities: entries(d.activities, e => `<b>${esc(e.role)}</b>`, e => e.org),
+    awards: years(d.awards), certificates: years(d.certificates),
+  };
+}
+
+// Bố cục dùng chung. main/side = thứ tự mục; mục không được liệt kê vẫn hiện cuối cột chính nếu có nội dung (không mất dữ liệu)
+function layout(key, d) {
+  const o = TEMPLATES[key], p = parts(d), side = o.side || [];
+  const rest = SEC_IDS.filter(id => !o.main.includes(id) && !side.includes(id));
+  const secs = ids => ids.map(id => section(p.t[id], p[id])).join('');
+  const main = secs([...o.main, ...rest]), aside = secs(side);
+  const head = `<header class="hd">${p.avatar}<div class="hd__txt">${p.name}<div class="cts">${p.contact}</div></div></header>`;
+  const body = {
+    sidebar: `<aside>${o.nameInMain ? p.avatar : p.avatar + p.name}${section(p.t.info, p.contact)}${aside}</aside>
+      <main>${o.nameInMain ? `<header class="hd"><div class="hd__txt">${p.name}</div></header>` : ''}${main}</main>`,
+    single: head + main,
+    cols: head + `<div class="cols"><main>${main}</main><aside>${aside}</aside></div>`,
+  }[o.layout];
+  return `<div class="cv tpl-${key}" style="${p.style}">${body}</div>`;
+}
+
+const AUDIENCES = { student: 'Sinh viên', fresh: 'Mới tốt nghiệp', senior: 'Nhiều kinh nghiệm' };
+// margins: lề in [trên trang 1, trên các trang sau, dưới] (mm); colors: [màu nhấn, màu phụ] gợi ý khi chọn mẫu
+const TEMPLATES = {
+  // ---- Sinh viên: học vấn, dự án, hoạt động lên đầu; kinh nghiệm (nếu có) xuống dưới
+  'st-bright': { aud: 'student', name: 'Năng động', desc: 'Header màu, nhãn mục dạng pill — trẻ trung, nổi bật', layout: 'cols',
+    margins: [0, 14, 14], colors: ['#2e86de', '#1e293b'],
+    main: ['objective', 'education', 'projects', 'activities', 'experience', 'more'], side: ['skills', 'languages', 'awards', 'certificates', 'hobbies'] },
+  'st-campus': { aud: 'student', name: 'Campus', desc: 'Sidebar sáng, ảnh tròn — thân thiện, rõ ràng', layout: 'sidebar',
+    margins: [0, 0, 0], colors: ['#10ac84', '#16423c'],
+    main: ['objective', 'education', 'activities', 'projects', 'experience', 'awards', 'certificates', 'more'], side: ['skills', 'languages', 'hobbies'] },
+  'st-minimal': { aud: 'student', name: 'Tối giản', desc: 'Một cột căn giữa, chuẩn ATS — gọn gàng, dễ đọc', layout: 'single',
+    margins: [0, 14, 14], colors: ['#8e44ad', '#2d2a32'],
+    main: ['objective', 'education', 'projects', 'activities', 'skills', 'languages', 'awards', 'certificates', 'experience', 'hobbies', 'more'] },
+  'st-journey': { aud: 'student', name: 'Hành trình', desc: 'Dòng thời gian cho học tập, dự án, hoạt động', layout: 'single',
+    margins: [0, 14, 14], colors: ['#e84393', '#2d3436'],
+    main: ['objective', 'education', 'projects', 'activities', 'experience', 'skills', 'languages', 'awards', 'certificates', 'hobbies', 'more'] },
+  'st-card': { aud: 'student', name: 'Thẻ màu', desc: 'Hai cột, mỗi mục là một thẻ — hiện đại, dễ quét', layout: 'cols',
+    margins: [0, 14, 14], colors: ['#f39c12', '#343a3d'],
+    main: ['objective', 'education', 'projects', 'experience', 'more'], side: ['skills', 'activities', 'languages', 'awards', 'certificates', 'hobbies'] },
+
+  // ---- Mới tốt nghiệp: mục tiêu + kinh nghiệm/thực tập đầu tiên, học vấn còn nổi bật
+  dark: { aud: 'fresh', name: 'Sidebar tối', desc: 'Hai cột, cột trái nền tối — giống mẫu gốc', layout: 'sidebar',
+    margins: [0, 0, 0], colors: ['#f39c12', '#343a3d'],
+    main: ['objective', 'experience', 'education', 'projects', 'activities', 'awards', 'certificates', 'hobbies', 'more'], side: ['skills', 'languages'] },
+  classic: { aud: 'fresh', name: 'Thanh lịch', desc: 'Một cột, chuẩn ATS — dễ đọc với cả người lẫn máy lọc CV', layout: 'single',
+    margins: [0, 14, 14], colors: ['#f39c12', '#343a3d'],
+    main: ['objective', 'experience', 'education', 'projects', 'skills', 'languages', 'awards', 'certificates', 'activities', 'hobbies', 'more'] },
+  modern: { aud: 'fresh', name: 'Hiện đại', desc: 'Header nổi bật, kinh nghiệm dạng dòng thời gian', layout: 'cols',
+    margins: [0, 14, 14], colors: ['#f39c12', '#343a3d'],
+    main: ['objective', 'experience', 'education', 'projects', 'activities', 'more'], side: ['skills', 'languages', 'awards', 'certificates', 'hobbies'] },
+  'fr-balance': { aud: 'fresh', name: 'Cân đối', desc: 'Hai cột chia rõ: kinh nghiệm bên trái, năng lực bên phải', layout: 'cols',
+    margins: [0, 14, 14], colors: ['#e74c3c', '#1e293b'],
+    main: ['objective', 'experience', 'projects', 'activities', 'more'], side: ['education', 'skills', 'languages', 'certificates', 'awards', 'hobbies'] },
+  'fr-color': { aud: 'fresh', name: 'Sidebar màu', desc: 'Cột phải nền màu nhấn, tên lớn — tự tin, cá tính', layout: 'sidebar', nameInMain: true,
+    margins: [0, 0, 0], colors: ['#1f6f8b', '#1e293b'],
+    main: ['objective', 'experience', 'education', 'projects', 'activities', 'awards', 'more'], side: ['skills', 'languages', 'certificates', 'hobbies'] },
+
+  // ---- Nhiều kinh nghiệm: tóm tắt + kinh nghiệm/thành tích chiếm phần lớn, học vấn ngắn gọn
+  pro: { aud: 'senior', name: 'Chuyên nghiệp', desc: 'Tiêu đề mục cột trái, nội dung bên phải — gọn và sắc nét', layout: 'single',
+    margins: [0, 14, 14], colors: ['#f39c12', '#343a3d'],
+    main: ['objective', 'experience', 'projects', 'skills', 'education', 'certificates', 'awards', 'languages', 'references', 'more'] },
+  'ex-exec': { aud: 'senior', name: 'Điều hành', desc: 'Serif sang trọng, căn giữa — phù hợp quản lý, cấp cao', layout: 'single',
+    margins: [0, 16, 16], colors: ['#b08a46', '#1f2a44'],
+    main: ['objective', 'experience', 'skills', 'education', 'certificates', 'awards', 'languages', 'projects', 'references', 'more'] },
+  'ex-corp': { aud: 'senior', name: 'Doanh nghiệp', desc: 'Header đậm, cột trái tóm năng lực — chuẩn mực, tin cậy', layout: 'cols',
+    margins: [0, 14, 14], colors: ['#2e86de', '#1e293b'],
+    main: ['objective', 'experience', 'projects', 'education', 'more'], side: ['skills', 'languages', 'certificates', 'awards', 'references', 'hobbies'] },
+  'ex-chrono': { aud: 'senior', name: 'Biên niên', desc: 'Cột mốc thời gian bên trái — nhìn rõ lộ trình sự nghiệp', layout: 'single',
+    margins: [0, 14, 14], colors: ['#10ac84', '#1e293b'],
+    main: ['objective', 'experience', 'projects', 'education', 'certificates', 'awards', 'skills', 'languages', 'references', 'more'] },
+  'ex-compact': { aud: 'senior', name: 'Súc tích', desc: 'Mật độ cao, tiêu đề dải màu — chứa nhiều kinh nghiệm', layout: 'single',
+    margins: [0, 12, 12], colors: ['#c0392b', '#2d3436'],
+    main: ['objective', 'experience', 'projects', 'skills', 'education', 'certificates', 'awards', 'languages', 'references', 'more'] },
+};
+for (const k in TEMPLATES) TEMPLATES[k].render = d => layout(k, d);
+
+const MM = 96 / 25.4;
+const pageCSS = (tpl, wrap) => {
+  const [, top, bottom] = TEMPLATES[tpl].margins;
+  return `@page{size:A4;margin:0}@media print{${wrap}{padding:${top}mm 0 ${bottom}mm;-webkit-box-decoration-break:clone;box-decoration-break:clone}`
+    + `${wrap}>.cv{margin-top:-${top}mm}}`; // trang 1 vẫn sát mép trên (header nền màu tràn mép)
+};
+
+
+// ---------- State ----------
+const KEY = 'panic-cv';
+const clone = o => JSON.parse(JSON.stringify(o));
+
+// Dữ liệu từ localStorage / file .json là đầu vào không tin cậy: chỉ giữ đúng kiểu, avatar phải là data:image, màu phải là #hex
+function sanitize(raw) {
+  const d = clone(EMPTY), src = raw && typeof raw === 'object' ? raw : {};
+  for (const k of Object.keys(EMPTY)) {
+    if (typeof EMPTY[k] === 'string' && typeof src[k] === 'string') d[k] = src[k];
+  }
+  for (const k of Object.keys(TITLES)) if (typeof src.titles?.[k] === 'string') d.titles[k] = src.titles[k];
+  const unplus = t => t.replace(/^(\s*\*\*)\s*\+\s*/gm, '$1').replace(/^(\s*)\+\s+/gm, '$1- ');
+  for (const k of ['skills', 'objective', 'hobbies', 'more', 'languages', 'references']) d[k] = unplus(d[k]);
+  for (const [k, fields] of Object.entries(LISTS)) {
+    if (Array.isArray(src[k])) d[k] = src[k].filter(x => x && typeof x === 'object')
+      .map(x => Object.fromEntries(fields.map(([f]) => [f, typeof x[f] === 'string' ? (f === 'desc' ? unplus(x[f]) : x[f]) : ''])));
+  }
+  if (!/^data:image\/(png|jpeg|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(d.avatar)) d.avatar = '';
+  if (!/^#[0-9a-f]{6}$/i.test(d.accent)) d.accent = EMPTY.accent;
+  if (!/^#[0-9a-f]{6}$/i.test(d.side)) d.side = EMPTY.side;
+  if (!TEMPLATES[d.template]) d.template = EMPTY.template;
+  return d;
+}
+
+let state;
+try { state = sanitize(JSON.parse(localStorage.getItem(KEY))); if (!localStorage.getItem(KEY)) state = clone(SAMPLE); }
+catch { state = clone(SAMPLE); }
+
+let saveTimer;
+function save() {
+  clearTimeout(saveTimer);
+  setChip('Đang lưu…', 'saving');
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); setChip('Đã lưu', ''); }
+    catch { setChip('Chưa lưu được', 'error'); }
+  }, 300);
+}
+
+const getPath = p => p.split('.').reduce((o, k) => o?.[k], state);
+function setPath(p, v) { const ks = p.split('.'), last = ks.pop(); ks.reduce((o, k) => o[k], state)[last] = v; }
+
+// ---------- UI icons (stroke) ----------
+const UI = {
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>',
+  spark: '<path d="m12 3 2.1 5.4L20 9l-4.5 3.9L17 19l-5-3-5 3 1.5-6.1L4 9l5.9-.6z"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  briefcase: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',
+  cap: '<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+  trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+  badge: '<circle cx="12" cy="9" r="6"/><path d="m8.5 13.5-1.5 7.5 5-3 5 3-1.5-7.5"/>',
+  heart: '<path d="M12 20s-7-4.4-9-9a4.5 4.5 0 0 1 9-3 4.5 4.5 0 0 1 9 3c-2 4.6-9 9-9 9z"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+  chev: '<path d="m6 9 6 6 6-6"/>',
+  up: '<path d="m18 15-6-6-6 6"/>',
+  trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  download: '<path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/>',
+  upload: '<path d="M12 20V9m-5 5 5-5 5 5M5 4h14"/>',
+  file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h4"/>',
+  image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>',
+  code: '<path d="m8 8-4 4 4 4M16 8l4 4-4 4"/>',
+  db: '<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  save: '<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7M8 21v-7h8v7"/>',
+  reset: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+  bold: '<path d="M7 5h6a3.5 3.5 0 0 1 0 7H7zM7 12h7a3.5 3.5 0 0 1 0 7H7z"/>',
+  list: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+  check: '<path d="m5 12 5 5 9-10"/>',
+  layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.2.6 3.5 2.8 3.5 6"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/>',
+  contact: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2.5"/><path d="M5.5 16.5c.6-1.8 2-2.8 3.5-2.8s2.9 1 3.5 2.8M15 9h3M15 13h3"/>',
+  print: '<path d="M7 9V3h10v6M7 17H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-3"/><rect x="7" y="14" width="10" height="7"/>',
+};
+const ic = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${UI[n]}</svg>`;
+
+const SEC_ICON = { info: 'user', objective: 'target', experience: 'briefcase', education: 'cap', projects: 'folder', activities: 'users',
+  skills: 'spark', languages: 'globe', awards: 'trophy', certificates: 'badge', hobbies: 'heart', references: 'contact', more: 'info' };
+const ownSecs = () => { const o = TEMPLATES[state.template]; return ['info', ...o.main, ...(o.side || [])]; };
+// Thứ tự mục trong editor theo mẫu đang chọn; mục mẫu không dùng xếp cuối
+const secList = () => { const own = ownSecs(); return [...own, ...SEC_IDS.filter(id => !own.includes(id))]; };
+const PLACEHOLDER = {
+  skills: '**Nhóm kỹ năng**\n- Chi tiết kỹ năng 1\n- Chi tiết kỹ năng 2',
+  objective: '**Ngắn hạn:**\n- ...\n**Dài hạn:**\n- ...',
+  languages: 'Tiếng Anh — TOEIC 750\nTiếng Nhật — N3',
+  references: '**Nguyễn Văn B** — Trưởng phòng Kỹ thuật, Công ty ABC\n- Điện thoại: 09xx xxx xxx',
+  hobbies: '- Đọc sách\n- Du lịch', more: '**Ưu điểm:**\n- ...\n**Nhược điểm:**\n- ...',
+};
+const ACCENTS = ['#f39c12', '#e74c3c', '#2e86de', '#10ac84', '#8e44ad', '#e84393'];
+const SIDES = ['#343a3d', '#1e293b', '#1f3a5f', '#16423c', '#4a2c2a'];
+const $ = id => document.getElementById(id);
+const editor = $('editor'), rail = $('rail'), paper = $('paper'), stage = $('stage'), scroller = $('scroll');
+let openSec = 'info', zoom = 'fit';
+
+function toast(msg, error) {
+  const t = Object.assign(document.createElement('div'), { className: 'toast' + (error ? ' error' : ''), innerHTML: ic(error ? 'info' : 'check') + esc(msg) });
+  $('toasts').append(t);
+  setTimeout(() => t.remove(), 2800);
+}
+// Hộp thoại xác nhận của trang (thay confirm() mặc định của trình duyệt)
+function ask(title, msg, ok = 'Đồng ý', danger = false) {
+  const d = $('dlg');
+  d.classList.toggle('danger', danger);
+  $('dlgIco').innerHTML = ic(danger ? 'trash' : 'info');
+  $('dlgTitle').textContent = title;
+  $('dlgMsg').textContent = msg;
+  $('dlgOk').textContent = ok;
+  d.returnValue = '';
+  d.showModal();
+  return new Promise(res => d.addEventListener('close', () => res(d.returnValue === 'yes'), { once: true }));
+}
+function setChip(text, cls) { const c = $('saveChip'); c.textContent = text; c.className = 'chip ' + cls; c.title = cls === 'error' ? 'Ảnh quá lớn hoặc trình duyệt chặn lưu — hãy dùng "Lưu file .json"' : ''; }
+
+// ---------- Editor ----------
+const filled = id => id === 'info' ? !!(state.name.trim() && (state.phone.trim() || state.email.trim()))
+  : LISTS[id] ? state[id].some(x => Object.values(x).some(v => v.trim()))
+  : !!state[id].trim();
+function meta(id) {
+  if (id === 'info') return state.name.trim() || 'Chưa điền';
+  if (LISTS[id]) return state[id].length ? `${state[id].length} mục` : 'Chưa có mục nào';
+  const n = state[id].split('\n').filter(l => l.trim()).length;
+  return n ? `${n} dòng` : 'Chưa điền';
+}
+const itemLabel = x => [x.title || x.major || x.role || x.year, x.company || x.school || x.org || x.name].filter(Boolean).join(' · ') || 'Mục mới';
+
+const field = (k, label, o = {}) => o.area
+  ? `<div class="f"><div class="f__top"><span>${label}</span><div class="fmt">
+      <button type="button" data-act="fmt" data-f="bold" title="In đậm phần chọn (**chữ**)">${ic('bold')}Đậm</button>
+      <button type="button" data-act="fmt" data-f="list" title="Bật/tắt gạch đầu dòng cho các dòng chọn">${ic('list')}Gạch đầu dòng</button>
+    </div></div><textarea data-k="${k}" rows="${o.rows || 8}" placeholder="${esc(o.ph || '')}">${esc(getPath(k))}</textarea></div>`
+  : `<label class="f"><span>${label}</span><input data-k="${k}" value="${esc(getPath(k))}" placeholder="${esc(o.ph || '')}"></label>`;
+
+function listEditor(id) {
+  const f = LISTS[id];
+  const items = state[id].map((x, i) => `<div class="entry">
+      <div class="entry__head"><span class="entry__num">${i + 1}</span><span class="entry__label" data-label="${id}.${i}"></span>
+        <button type="button" data-act="up" data-list="${id}" data-i="${i}" title="Đưa lên">${ic('up')}</button>
+        <button type="button" data-act="down" data-list="${id}" data-i="${i}" title="Đưa xuống">${ic('chev')}</button>
+        <button type="button" class="del" data-act="del" data-list="${id}" data-i="${i}" title="Xóa mục">${ic('trash')}</button></div>
+      ${f.length > 2
+        ? `<div class="grid2">${f.slice(0, 4).map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>${field(`${id}.${i}.desc`, f[4][1], { area: true, rows: 5 })}`
+        : `<div class="grid2" style="grid-template-columns:90px 1fr">${f.map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>`}
+    </div>`).join('');
+  return (items || '<div class="empty-note">Chưa có mục nào — mục trống sẽ được ẩn trên CV</div>')
+    + `<button type="button" class="add" data-act="add" data-list="${id}">${ic('plus')}Thêm mục</button>`;
+}
+
+function sectionBody(id) {
+  if (id === 'info') return `
+    <div class="avatar-drop" id="drop">
+      <div class="avatar-drop__img"${state.avatar ? ` style="background-image:url('${state.avatar}')"` : ''}>${state.avatar ? '' : ic('image')}</div>
+      <div><b>Ảnh đại diện</b><small>Kéo thả ảnh vào đây hoặc chọn file (JPG, PNG)</small>
+        <div class="row"><label class="toolbtn sm">${ic('upload')}Chọn ảnh<input type="file" id="avatarFile" accept="image/*" hidden></label>
+        ${state.avatar ? `<button type="button" class="toolbtn sm" data-act="noAvatar">${ic('trash')}Bỏ ảnh</button>` : ''}</div></div>
+    </div>
+    ${field('name', 'Họ và tên', { ph: 'Nguyễn Văn A' })}
+    ${field('position', 'Vị trí ứng tuyển', { ph: 'Tùy chọn — vd. Kỹ sư thiết kế cơ khí' })}
+    <div class="grid2">${field('phone', 'Điện thoại', { ph: '09xx xxx xxx' })}${field('email', 'Email', { ph: 'ban@email.com' })}</div>
+    ${field('address', 'Địa chỉ', { ph: 'Số nhà, đường, phường - Tỉnh/TP' })}
+    <div class="grid2">${field('dob', 'Ngày sinh', { ph: 'Tùy chọn' })}${field('website', 'Website / LinkedIn', { ph: 'Tùy chọn' })}</div>`;
+  if (LISTS[id]) return listEditor(id);
+  return field(id, 'Nội dung', { area: true, rows: id === 'skills' || id === 'more' ? 14 : 8, ph: PLACEHOLDER[id] });
+}
+
+function renderEditor() {
+  const title = id => esc(state.titles[id] || TITLES[id]);
+  editor.innerHTML = `<div class="editor__head"><div class="eyebrow">Nội dung CV</div><h2>Soạn thông tin</h2>
+      <p>Thứ tự mục theo mẫu đang chọn. Gạch đầu dòng: bấm nút hoặc gõ "- ", Enter sẽ tự thêm dòng mới. Tự lưu trong trình duyệt.</p></div>`
+    + secList().map(id => `<section class="card${openSec === id ? ' open' : ''}" data-card="${id}">
+      <button type="button" class="card__head" data-act="toggle" data-id="${id}" aria-expanded="${openSec === id}">
+        <span class="card__ico">${ic(SEC_ICON[id])}</span>
+        <span class="card__title"><b data-title="${id}">${title(id)}</b><small data-meta="${id}"></small></span>
+        <span class="card__chev">${ic('chev')}</span></button>
+      <div class="card__body">
+        <div class="title-f"><span>Tiêu đề mục</span><input data-k="titles.${id}" value="${esc(state.titles[id])}" aria-label="Tiêu đề mục"></div>
+        ${sectionBody(id)}
+      </div></section>`).join('');
+  rail.innerHTML = secList().map(id => `<button type="button" data-act="toggle" data-id="${id}" aria-label="${title(id)}"
+      class="${openSec === id ? 'active' : ''}">${ic(SEC_ICON[id])}<span class="dot" data-dot="${id}"></span></button>`).join('');
+  refreshMeta();
+  renderToolbar();
+}
+
+function refreshMeta() {
+  const own = ownSecs();
+  let done = 0;
+  for (const id of secList()) {
+    const ok = filled(id);
+    if (own.includes(id)) done += ok;
+    editor.querySelector(`[data-meta="${id}"]`).textContent = meta(id);
+    rail.querySelector(`[data-dot="${id}"]`).classList.toggle('ok', ok);
+  }
+  editor.querySelectorAll('[data-label]').forEach(el => { const [id, i] = el.dataset.label.split('.'); el.textContent = itemLabel(state[id][i]); });
+  const pct = Math.round(done / own.length * 100);
+  $('progBar').style.width = pct + '%';
+  $('progTxt').textContent = pct + '%';
+}
+
+function renderToolbar() {
+  const t = TEMPLATES[state.template];
+  $('tplBtn').innerHTML = `${ic('layout')}${AUDIENCES[t.aud]} · ${esc(t.name)}${ic('chev')}`;
+  const sw = (key, list) => list.map(c => `<button type="button" class="sw${state[key] === c ? ' active' : ''}" style="background:${c}"
+      data-act="color" data-key="${key}" data-v="${c}" title="${c}" aria-label="Màu ${c}"></button>`).join('')
+    + `<label class="sw sw-custom${list.includes(state[key]) ? '' : ' active'}" title="Chọn màu khác"><input type="color" data-k="${key}" value="${state[key]}" aria-label="Chọn màu khác"></label>`;
+  $('accentSw').innerHTML = sw('accent', ACCENTS);
+  $('sideSw').innerHTML = sw('side', SIDES);
+}
+
+function openSection(id, fromRail) {
+  openSec = !fromRail && openSec === id ? null : id;
+  editor.querySelectorAll('.card').forEach(c => {
+    c.classList.toggle('open', c.dataset.card === openSec);
+    c.querySelector('.card__head').setAttribute('aria-expanded', c.dataset.card === openSec);
+  });
+  rail.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.id === openSec));
+  // Cuộn riêng khung editor (scrollIntoView sẽ cuộn cả trang làm mất topbar)
+  if (fromRail) editor.scrollTo({ top: editor.querySelector(`[data-card="${id}"]`).offsetTop - 12, behavior: 'smooth' });
+}
+
+// ---------- Preview ----------
+const cvHTML = () => TEMPLATES[state.template].render(state);
+let frame;
+function renderPreview() {
+  cancelAnimationFrame(frame);
+  $('page-style').textContent = pageCSS(state.template, '.paper');
+  frame = requestAnimationFrame(() => {
+    paper.innerHTML = cvHTML() + '<div class="guides" id="guides"></div>';
+    fit();
+  });
+}
+function fit() {
+  const cv = paper.firstElementChild;
+  if (!cv || !scroller.clientWidth) return;
+  const s = zoom === 'fit' ? Math.min(1, (scroller.clientWidth - 48) / cv.offsetWidth) : zoom;
+  paper.style.transform = `scale(${s})`;
+  stage.style.width = cv.offsetWidth * s + 'px';
+  stage.style.height = cv.offsetHeight * s + 'px';
+  $('zoomTxt').textContent = Math.round(s * 100) + '%';
+  // Vạch ngắt trang ước lượng theo lề in của mẫu (trình duyệt sẽ đẩy dòng chữ bị cắt sang trang sau)
+  const [first, top, bottom] = TEMPLATES[state.template].margins, breaks = [];
+  for (let y = (297 - first - bottom) * MM; y < cv.offsetHeight - 2; y += (297 - top - bottom) * MM) breaks.push(y);
+  $('guides').innerHTML = breaks.map((y, i) => `<i style="top:${y}px" data-p="Trang ${i + 2}"></i>`).join('');
+  $('pages').textContent = `${breaks.length + 1} trang A4`;
+}
+new ResizeObserver(fit).observe(scroller);
+document.fonts.ready.then(fit);
+
+function update() { renderPreview(); save(); }
+function rerenderAll() { renderEditor(); update(); }
+
+// ---------- Theme ----------
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $('themeBtn').innerHTML = ic(t === 'dark' ? 'sun' : 'moon');
+  try { localStorage.setItem(KEY + '-theme', t); } catch {}
+}
+setTheme((() => { try { return localStorage.getItem(KEY + '-theme'); } catch {} })()
+  || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+
+// ---------- Menus ----------
+const item = (act, icon, title, sub, cls = '') => `<button type="button" class="menu__item ${cls}" data-act="${act}"><span class="ico">${ic(icon)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
+$('exportBtn').innerHTML = `${ic('download')}<span class="txt">Xuất CV</span>`;
+$('exportMenu').innerHTML = item('print', 'file', 'PDF', 'Hộp thoại in → “Lưu dưới dạng PDF”, chữ sắc nét & chọn được')
+  + item('png', 'image', 'Ảnh PNG', 'Độ phân giải cao, gửi nhanh qua chat')
+  + item('html', 'code', 'Trang HTML', 'Một file độc lập, mở bằng trình duyệt');
+$('dataBtn').innerHTML = `${ic('db')}<span class="txt">Dữ liệu</span>`;
+$('dataMenu').innerHTML = `<label class="menu__item"><span class="ico">${ic('upload')}</span><span><b>Mở file .json</b><small>Tiếp tục chỉnh CV đã lưu trước đó</small></span>
+    <input type="file" id="openJson" accept=".json,application/json" hidden></label>`
+  + item('saveJson', 'save', 'Lưu file .json', 'Sao lưu để sửa sau hoặc chuyển máy')
+  + '<div class="menu__sep"></div>'
+  + item('sample', 'reset', 'Nạp dữ liệu mẫu', 'Thay nội dung hiện tại bằng CV mẫu')
+  + item('clear', 'trash', 'Xóa trắng nội dung', 'Giữ lại tiêu đề mục và màu sắc', 'danger');
+
+// ---------- Actions ----------
+const slug = () => (state.name || 'cv').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'cv';
+function download(blob, name) {
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// Bản sao CV không bị scale, đặt ngoài màn hình để chụp đúng khổ 794px
+function offscreen() {
+  const host = Object.assign(document.createElement('div'), { innerHTML: cvHTML() });
+  host.style.cssText = 'position:fixed;left:-10000px;top:0';
+  document.body.append(host);
+  return host;
+}
+
+const ACTIONS = {
+  toggle(_, btn) { openSection(btn.dataset.id, !!btn.closest('.rail')); },
+  add({ list }) { state[list].push(Object.fromEntries(LISTS[list].map(([f]) => [f, '']))); rerenderAll(); },
+  async del({ list, i }) {
+    if (await ask('Xóa mục này?', `“${itemLabel(state[list][i])}” sẽ bị xóa khỏi CV.`, 'Xóa', true)) { state[list].splice(i, 1); rerenderAll(); }
+  },
+  up({ list, i }) { if (i > 0) { const a = state[list]; [a[i - 1], a[i]] = [a[i], a[i - 1]]; rerenderAll(); } },
+  down({ list, i }) { const a = state[list]; if (i < a.length - 1) { [a[i + 1], a[i]] = [a[i], a[i + 1]]; rerenderAll(); } },
+  fmt(_, btn) {
+    const ta = btn.closest('.f').querySelector('textarea'), { selectionStart: s, selectionEnd: e, value: v } = ta;
+    if (btn.dataset.f === 'bold') ta.setRangeText(`**${v.slice(s, e) || 'chữ đậm'}**`, s, e, 'select');
+    else {
+      const ls = v.lastIndexOf('\n', s - 1) + 1, le = v.indexOf('\n', Math.max(e - 1, s)), end = le < 0 ? v.length : le;
+      const lines = v.slice(ls, end).split('\n'), on = lines.every(l => /^[-•+]\s/.test(l));
+      ta.setRangeText(lines.map(l => on ? l.replace(/^[-•+]\s+/, '') : '- ' + l).join('\n'), ls, end, 'select');
+    }
+    ta.focus();
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+  },
+  noAvatar() { state.avatar = ''; rerenderAll(); },
+  tpl(_, btn) { state.template = btn.dataset.v; [state.accent, state.side] = TEMPLATES[state.template].colors; rerenderAll(); },
+  aud(_, btn) { galAud = btn.dataset.v; renderGallery(); },
+  color(_, btn) { state[btn.dataset.key] = btn.dataset.v; renderToolbar(); update(); },
+  theme() { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); },
+  zoomIn() { zoom = Math.min(2, Math.round(parseInt($('zoomTxt').textContent) / 10 + 1) / 10); fit(); },
+  zoomOut() { zoom = Math.max(0.3, Math.round(parseInt($('zoomTxt').textContent) / 10 - 1) / 10); fit(); },
+  zoomFit() { zoom = 'fit'; fit(); },
+  view(_, btn) {
+    document.body.dataset.view = btn.dataset.v;
+    $('mtabs').querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+    fit();
+  },
+  async sample() {
+    if (!await ask('Nạp dữ liệu mẫu?', 'Toàn bộ nội dung hiện tại sẽ được thay bằng CV mẫu. Hãy “Lưu file .json” trước nếu muốn giữ lại.', 'Nạp mẫu')) return;
+    state = clone(SAMPLE);
+    rerenderAll();
+    toast('Đã nạp dữ liệu mẫu');
+  },
+  async clear() {
+    if (!await ask('Xóa trắng nội dung?', 'Mọi thông tin đã nhập sẽ bị xóa. Tiêu đề mục, mẫu và màu sắc được giữ lại.', 'Xóa trắng', true)) return;
+    state = { ...clone(EMPTY), titles: state.titles, accent: state.accent, side: state.side, template: state.template };
+    rerenderAll();
+  },
+  saveJson() { download(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }), `${slug()}.json`); toast('Đã lưu file .json'); },
+  print() {
+    const old = document.title;
+    document.title = slug(); // tên file PDF gợi ý khi "Lưu dưới dạng PDF"
+    window.print();
+    document.title = old;
+  },
+  async png(_, btn) {
+    btn.disabled = true;
+    const host = offscreen();
+    try {
+      await document.fonts.ready;
+      const canvas = await html2canvas(host.firstElementChild, { scale: 3, backgroundColor: '#fff' });
+      canvas.toBlob(b => download(b, `${slug()}.png`), 'image/png');
+      toast('Đã xuất ảnh PNG');
+    } catch (err) { toast('Xuất ảnh thất bại: ' + err.message, true); }
+    finally { host.remove(); btn.disabled = false; }
+  },
+  html() {
+    const doc = `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(state.name || 'CV')}</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#eef0f3}.cv{margin:20px auto;box-shadow:0 4px 24px rgba(0,0,0,.15)}@media print{body{background:#fff}.cv{margin:0;box-shadow:none}}${pageCSS(state.template, 'body')}
+${$('cv-style').textContent}</style></head><body>${cvHTML()}</body></html>`;
+    download(new Blob([doc], { type: 'text/html' }), `${slug()}.html`);
+    toast('Đã xuất file HTML');
+  },
+};
+
+// ---------- Events ----------
+// Thư viện mẫu theo đối tượng: thumbnail render thật từ nội dung hiện tại mỗi khi mở
+const AUD_HINT = {
+  student: 'Chưa có nhiều kinh nghiệm: đưa học vấn, dự án, hoạt động ngoại khóa lên đầu; kỹ năng và giải thưởng làm điểm nhấn.',
+  fresh: '0–3 năm (thực tập, công việc đầu tiên): mục tiêu rõ ràng, kinh nghiệm ngay sau đó, học vấn vẫn nổi bật.',
+  senior: 'Trên 3 năm: tóm tắt năng lực, kinh nghiệm và thành tích đo lường được chiếm phần lớn; học vấn ngắn gọn.',
+};
+let galAud;
+function renderGallery() {
+  galAud ||= TEMPLATES[state.template].aud;
+  $('tplPop').innerHTML = `<div class="seg aud-tabs">${Object.entries(AUDIENCES).map(([k, v]) =>
+      `<button type="button" data-act="aud" data-v="${k}" class="${galAud === k ? 'active' : ''}">${v}</button>`).join('')}</div>
+    <p class="aud-hint">${AUD_HINT[galAud]}</p>
+    <div class="tpl-grid">${Object.entries(TEMPLATES).filter(([, t]) => t.aud === galAud).map(([k, t]) =>
+      `<button type="button" class="tplcard${state.template === k ? ' active' : ''}" data-act="tpl" data-v="${k}">
+        <div class="thumb"><div>${t.render({ ...state, accent: t.colors[0], side: t.colors[1] })}</div></div><b>${esc(t.name)}</b><small>${esc(t.desc)}</small></button>`).join('')}</div>`;
+}
+$('tplMenu').addEventListener('toggle', e => { if (e.target.open) renderGallery(); });
+
+// Enter trong dòng gạch đầu dòng tự thêm "- " cho dòng mới; Enter ở dòng "- " trống thì thoát danh sách
+editor.addEventListener('keydown', e => {
+  const ta = e.target;
+  if (e.key !== 'Enter' || e.shiftKey || ta.tagName !== 'TEXTAREA' || ta.selectionStart !== ta.selectionEnd) return;
+  const v = ta.value, s = ta.selectionStart, ls = v.lastIndexOf('\n', s - 1) + 1, m = v.slice(ls, s).match(/^(\s*)[-•+]\s+(.*)$/);
+  if (!m) return;
+  e.preventDefault();
+  if (m[2].trim()) ta.setRangeText(`\n${m[1]}- `, s, s, 'end');
+  else ta.setRangeText('', ls, s, 'end');
+  ta.dispatchEvent(new Event('input', { bubbles: true }));
+});
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-act]');
+  if (btn) ACTIONS[btn.dataset.act]({ list: btn.dataset.list, i: +btn.dataset.i }, btn);
+  document.querySelectorAll('details.menu[open]').forEach(d => {
+    if (e.target.isConnected && (!d.contains(e.target) || e.target.closest('button.menu__item, .tplcard'))) d.open = false;
+  });
+});
+
+document.addEventListener('input', e => {
+  const k = e.target.dataset?.k;
+  if (!k) return;
+  setPath(k, e.target.value);
+  if (k.startsWith('titles.')) {
+    const id = k.slice(7), t = e.target.value || TITLES[id];
+    editor.querySelector(`[data-title="${id}"]`).textContent = t;
+    rail.querySelector(`[data-id="${id}"]`).setAttribute('aria-label', t);
+  }
+  refreshMeta();
+  update();
+});
+
+function loadAvatar(file) {
+  if (!file.type.startsWith('image/')) return toast('File không phải ảnh.', true);
+  // Thu nhỏ ảnh về tối đa 600px để không vượt giới hạn localStorage
+  const img = new Image();
+  img.onload = () => {
+    const s = Math.min(1, 600 / Math.max(img.width, img.height));
+    const c = Object.assign(document.createElement('canvas'), { width: img.width * s, height: img.height * s });
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    state.avatar = c.toDataURL('image/jpeg', 0.9);
+    URL.revokeObjectURL(img.src);
+    rerenderAll();
+    toast('Đã cập nhật ảnh đại diện');
+  };
+  img.onerror = () => toast('Không đọc được file ảnh.', true);
+  img.src = URL.createObjectURL(file);
+}
+
+document.addEventListener('change', e => {
+  if (e.target.dataset?.k === 'accent' || e.target.dataset?.k === 'side') return renderToolbar();
+  const file = e.target.files?.[0];
+  if (!file) return;
+  if (e.target.id === 'avatarFile') loadAvatar(file);
+  else if (e.target.id === 'openJson') {
+    e.target.closest('details').open = false;
+    file.text().then(t => { state = sanitize(JSON.parse(t)); rerenderAll(); toast('Đã mở ' + file.name); })
+      .catch(() => toast('File .json không hợp lệ.', true));
+  }
+  e.target.value = '';
+});
+
+// Kéo thả ảnh đại diện; chặn trình duyệt mở file khi thả lệch chỗ
+addEventListener('dragover', e => { e.preventDefault(); $('drop')?.classList.toggle('drag', !!e.target.closest?.('#drop')); });
+addEventListener('dragleave', e => { if (!e.relatedTarget) $('drop')?.classList.remove('drag'); });
+addEventListener('drop', e => {
+  e.preventDefault();
+  $('drop')?.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (file && e.target.closest?.('#drop')) loadAvatar(file);
+});
+
+rerenderAll();
+</script>
+</body>
+</html>

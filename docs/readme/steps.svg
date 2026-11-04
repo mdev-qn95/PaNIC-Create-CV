@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="280" viewBox="0 0 1280 280" role="img" aria-labelledby="t">
+<title id="t">Ba bước: chọn mẫu, điền nội dung, tải về</title><style>text{font-family:'Be Vietnam Pro','Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif}
+@keyframes left{to{transform:translateX(var(--w))}}.left{animation:left linear infinite}
+@keyframes right{from{transform:translateX(var(--w))}to{transform:translateX(0)}}.right{animation:right linear infinite}
+@keyframes float{50%{transform:translateY(-10px)}}.float{animation:float 6s ease-in-out infinite}
+@keyframes pop{0%,60%{transform:scale(0)}75%{transform:scale(1.12)}85%,100%{transform:scale(1)}}.pop{animation:pop 4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{50%{opacity:0}}.blink{animation:blink 1s steps(1) infinite}
+@keyframes grow{from{transform:scaleX(0)}}.grow{animation:grow 1.6s cubic-bezier(.22,1,.36,1) both;transform-box:fill-box;transform-origin:left}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}</style><defs>
+<radialGradient id="glow" cx="15%" cy="0%" r="90%"><stop offset="0" stop-color="#24206b"/><stop offset=".6" stop-color="#0D0E1A"/></radialGradient>
+<linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B8BFF"/><stop offset="1" stop-color="#4338CA"/></linearGradient>
+<pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#8B8BFF" stroke-opacity=".07"/></pattern>
+</defs>
+<rect width="1280" height="280" rx="32" fill="#0D0E1A"/><rect width="1280" height="280" rx="32" fill="url(#grid)"/><g transform="translate(40 40)"><rect width="370" height="200" rx="22" fill="#151925" stroke="#262C3C"/>
+<circle cx="52" cy="56" r="26" fill="url(#brand)"/><text x="52" y="65" font-size="24" font-weight="800" text-anchor="middle" fill="#fff">1</text>
+<text x="94" y="64" font-size="22" font-weight="700" fill="#EEF1F7">Chọn đối tượng &amp; mẫu</text>
+<rect x="28" y="98" width="314" height="3" rx="1.5" fill="#8B8BFF" class="grow" style="animation-delay:0.0s" opacity=".85"/>
+<text x="28" y="136" font-size="16" fill="#9BA3B7">Sinh viên, mới tốt nghiệp</text><text x="28" y="162" font-size="16" fill="#9BA3B7">hay nhiều kinh nghiệm —</text><text x="28" y="188" font-size="16" fill="#9BA3B7">mỗi nhóm 5 mẫu riêng.</text></g><path d="M418 140h24m-8-8 8 8-8 8" stroke="#8B8BFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(450 40)"><rect width="370" height="200" rx="22" fill="#151925" stroke="#262C3C"/>
+<circle cx="52" cy="56" r="26" fill="url(#brand)"/><text x="52" y="65" font-size="24" font-weight="800" text-anchor="middle" fill="#fff">2</text>
+<text x="94" y="64" font-size="22" font-weight="700" fill="#EEF1F7">Điền nội dung</text>
+<rect x="28" y="98" width="314" height="3" rx="1.5" fill="#8B8BFF" class="grow" style="animation-delay:0.5s" opacity=".85"/>
+<text x="28" y="136" font-size="16" fill="#9BA3B7">Gõ bên trái, CV bên phải</text><text x="28" y="162" font-size="16" fill="#9BA3B7">cập nhật ngay. Mục trống</text><text x="28" y="188" font-size="16" fill="#9BA3B7">tự ẩn, ngắt trang gọn gàng.</text></g><path d="M828 140h24m-8-8 8 8-8 8" stroke="#8B8BFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(860 40)"><rect width="370" height="200" rx="22" fill="#151925" stroke="#262C3C"/>
+<circle cx="52" cy="56" r="26" fill="url(#brand)"/><text x="52" y="65" font-size="24" font-weight="800" text-anchor="middle" fill="#fff">3</text>
+<text x="94" y="64" font-size="22" font-weight="700" fill="#EEF1F7">Tải về &amp; ứng tuyển</text>
+<rect x="28" y="98" width="314" height="3" rx="1.5" fill="#8B8BFF" class="grow" style="animation-delay:1.0s" opacity=".85"/>
+<text x="28" y="136" font-size="16" fill="#9BA3B7">PDF chữ sắc nét, chuẩn A4,</text><text x="28" y="162" font-size="16" fill="#9BA3B7">ảnh PNG độ phân giải cao</text><text x="28" y="188" font-size="16" fill="#9BA3B7">hoặc một trang web độc lập.</text></g>
+<rect x=".5" y=".5" width="1279" height="279" rx="31.5" fill="none" stroke="#232838"/></svg>
