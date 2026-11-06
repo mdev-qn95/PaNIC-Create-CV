@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "PaNIC CV Studio",
+  "short_name": "CV Studio",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0A0C11",
+  "theme_color": "#0A0C11",
+  "icons": [
+    {
+      "src": "./assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
