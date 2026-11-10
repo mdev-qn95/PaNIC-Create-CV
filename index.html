@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi" data-theme="light" data-palette="purple" data-palette-lock>
+<html lang="vi" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -32,14 +32,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<link rel="stylesheet" href="vendor/panic-ui.min.css">
 <!-- CSS của CV: được nhúng nguyên văn vào file HTML khi xuất, nên mọi style của template đặt ở đây -->
 <style id="cv-style">
 .cv { --accent:#f39c12; --side:#343a3d; width:794px; min-height:297mm; box-sizing:border-box;
   font:14px/1.45 Roboto, Arial, sans-serif; color:#222; background:#fff;
   -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 .cv * { box-sizing:border-box; }
-.cv :where(h1, h2, h3) { letter-spacing:normal; line-height:inherit; text-wrap:wrap; color:inherit; font-weight:inherit; }
 .cv b { font-weight:500; }
 .cv .li { position:relative; padding-left:22px; }
 .cv .li::before { content:""; position:absolute; left:9px; top:calc(.725em - 2.5px); width:5px; height:5px; border-radius:50%; background:var(--accent); }
@@ -341,124 +339,266 @@
 
 <style>
 /* ============================================================
-   PaNIC CV Studio — chỉ bố cục riêng của app.
-   Màu, chữ, nút, ô nhập, menu, hộp thoại… lấy từ PaNIC UI (vendor/panic-ui.min.css),
-   mọi màu đi qua biến --pn-*. CSS của mẫu CV nằm riêng trong #cv-style.
+   PaNIC CV STUDIO · "Indigo Ink" identity
+   Single-file. Light/Dark. Giao diện editor — template CV nằm trong #cv-style.
    ============================================================ */
-html, body.pn { height:100%; }
-body.pn { overflow:hidden; }
-svg.i { width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+:root{
+  --accent:#7B7BFF; --accent-deep:#4F46E5; --accent-soft:rgba(123,123,255,.16); --accent-ink:#FFFFFF; --accent-glow:rgba(99,102,241,.55);
+  --ok:#3DD68C; --danger:#F0616D;
+  --radius:16px; --radius-sm:11px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,sans-serif;
+  --topbar:68px;
+}
+[data-theme="dark"]{
+  --bg:#0A0B12; --bg-2:#0F1020; --grid:rgba(123,123,255,.05);
+  --surface:rgba(22,26,36,.72); --surface-solid:#171B26; --surface-2:rgba(255,255,255,.035);
+  --field:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.15);
+  --ink:#EEF1F7; --muted:#9BA3B7; --faint:#666E84;
+  --canvas:#07090D; --dot:rgba(255,255,255,.07);
+  --shadow:0 24px 60px -24px rgba(0,0,0,.7);
+  --paper-shadow:0 30px 80px -20px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.05);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#EEF0F5; --bg-2:#F7F8FB; --grid:rgba(20,24,36,.04);
+  --surface:rgba(255,255,255,.85); --surface-solid:#FFFFFF; --surface-2:#F4F5F8;
+  --field:#FFFFFF;
+  --border:rgba(16,24,40,.09); --border-strong:rgba(16,24,40,.18);
+  --ink:#151A26; --muted:#5A6378; --faint:#949DB0;
+  --accent:#4F46E5; --accent-deep:#4338CA; --accent-soft:rgba(79,70,229,.10); --accent-ink:#FFFFFF; --accent-glow:rgba(79,70,229,.45);
+  --canvas:#E2E5EB; --dot:rgba(16,24,40,.09);
+  --shadow:0 20px 50px -24px rgba(30,40,70,.3);
+  --paper-shadow:0 24px 60px -24px rgba(30,40,70,.35),0 0 0 1px rgba(16,24,40,.05);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font:14px/1.45 var(--font);color:var(--ink);overflow:hidden;
+  background:
+    radial-gradient(1000px 600px at 12% -10%,rgba(99,102,241,.16),transparent 60%),
+    radial-gradient(900px 600px at 95% 0%,rgba(45,212,191,.07),transparent 55%),
+    linear-gradient(180deg,var(--bg-2),var(--bg));
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body::before{ /* fine grid texture */
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(circle at 25% 20%,#000,transparent 75%);
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none;padding:0}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:20px;border:3px solid transparent;background-clip:content-box}
+:focus,:focus-visible{outline:none}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.spacer{flex:1}
 
-/* ---------- header ---------- */
-.pn-header { padding:0 var(--pn-s-4); }
-.pn-brand img { width:34px; height:34px; border-radius:11px; }
-.progress { display:flex; align-items:center; gap:var(--pn-s-3); font-size:var(--pn-text-sm); color:var(--pn-text-2); }
-.progress .pn-progress { width:120px; }
-.progress b { color:var(--pn-text); font-variant-numeric:tabular-nums; }
+/* ---------- topbar ---------- */
+.topbar{position:relative;z-index:10;height:var(--topbar);display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid var(--border);background:var(--surface);backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand__logo{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:linear-gradient(145deg,var(--accent),var(--accent-deep));color:var(--accent-ink);font-weight:800;font-size:15px;letter-spacing:-.02em;box-shadow:0 8px 22px -6px var(--accent-glow)}
+.brand__title{font-size:15.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.brand__sub{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.progress{display:flex;align-items:center;gap:10px;padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:var(--surface-2);font-size:12.5px;color:var(--muted);font-weight:600}
+.progress__bar{width:110px;height:6px;border-radius:9px;background:var(--border);overflow:hidden}
+.progress__bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width .5s var(--ease)}
+.progress b{color:var(--ink);font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--faint);font-weight:600;white-space:nowrap;margin:0 4px}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.chip.saving::before{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.chip.error{color:var(--danger)}
+.chip.error::before{background:var(--danger);box-shadow:0 0 10px var(--danger)}
+.toolbtn{height:40px;min-width:40px;padding:0 12px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);font-weight:600;font-size:13px;white-space:nowrap;cursor:pointer;user-select:none;transition:transform .15s var(--ease),border-color .2s,background .2s}
+.toolbtn:hover{transform:translateY(-1px);border-color:var(--border-strong)}
+.toolbtn:active{transform:translateY(0)}
+.toolbtn.primary{background:linear-gradient(145deg,var(--accent),var(--accent-deep));border-color:transparent;color:var(--accent-ink);box-shadow:0 10px 24px -10px var(--accent-glow)}
+.toolbtn.sm{height:32px;min-width:32px;padding:0 10px;border-radius:9px;font-size:12px;gap:6px}
+.toolbtn.sm svg.i{width:15px;height:15px}
 
-/* ---------- khung 3 cột ---------- */
-.app { height:calc(100dvh - var(--pn-header-h)); display:grid; grid-template-columns:64px minmax(360px,460px) 1fr; grid-template-rows:minmax(0,1fr); }
-.app > * { min-height:0; }
-.rail { display:flex; flex-direction:column; align-items:center; gap:var(--pn-s-1); padding:var(--pn-s-3) 0; overflow-y:auto; border-right:1px solid var(--pn-border); background:var(--pn-surface); }
-.rail .pn-btn[aria-current="true"] { --_bg:var(--pn-primary-soft); --_fg:var(--pn-primary-text); }
-.rail .dot { position:absolute; top:7px; right:7px; width:7px; height:7px; border-radius:50%; background:var(--pn-border-strong); }
-.rail .dot.ok { background:var(--pn-success); }
+/* ---------- menus ---------- */
+.menu{position:relative}
+.menu>summary{list-style:none}
+.menu>summary::-webkit-details-marker{display:none}
+.menu[open]>summary{border-color:var(--border-strong)}
+.menu__pop{position:absolute;right:0;top:calc(100% + 8px);width:290px;padding:6px;border-radius:14px;background:var(--surface-solid);border:1px solid var(--border-strong);box-shadow:var(--shadow);z-index:20;animation:pop .18s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}}
+.menu__item{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border-radius:10px;text-align:left;cursor:pointer;transition:background .15s}
+.menu__item:hover{background:var(--surface-2)}
+.menu__item .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.menu__item b{display:block;font-size:13.5px;font-weight:600}
+.menu__item small{display:block;color:var(--faint);font-size:11.5px;margin-top:1px}
+.menu__item.danger .ico{background:rgba(240,97,109,.12);color:var(--danger)}
+.menu__sep{height:1px;background:var(--border);margin:6px 4px}
+.menu__pop.left{left:0;right:auto}
+.tpl-pop{width:700px;padding:12px;max-height:calc(100vh - 190px);display:flex;flex-direction:column}
+.aud-tabs{display:flex;width:100%}
+.aud-tabs button{flex:1}
+.aud-hint{margin:10px 4px 12px;font-size:12px;line-height:1.5;color:var(--muted)}
+.tpl-grid{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:2px 4px 4px 0}
+.tplcard{display:block;min-width:0;text-align:left;padding:8px 8px 10px;border-radius:12px;border:1.5px solid var(--border);transition:border-color .2s,background .2s}
+.tplcard:hover{border-color:var(--border-strong);background:var(--surface-2)}
+.tplcard.active{border-color:var(--accent);background:var(--accent-soft)}
+.tplcard .thumb{height:180px;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--border)}
+.tplcard .thumb>div{width:794px;transform:scale(.25);transform-origin:top left;pointer-events:none}
+.tplcard b{display:block;font-size:13px;font-weight:650;margin:9px 2px 1px}
+.tplcard small{display:block;color:var(--faint);font-size:11.5px;line-height:1.35;margin:0 2px}
 
-/* ---------- cột soạn thảo ---------- */
-.editor { position:relative; overflow-y:auto; padding:var(--pn-s-5) var(--pn-s-4) var(--pn-s-20); border-right:1px solid var(--pn-border); }
-.editor__head { margin:0 var(--pn-s-1) var(--pn-s-4); }
-.editor__head h1 { font-size:var(--pn-text-xl); margin:0 0 var(--pn-s-1); }
-.editor__head p { margin:0; }
-.editor .pn-accordion { overflow:visible; }
-.editor .pn-accordion summary { padding:var(--pn-s-3) var(--pn-s-4); }
-.editor .pn-accordion__content { padding:var(--pn-s-1) var(--pn-s-4) var(--pn-s-4); color:var(--pn-text); font-size:var(--pn-text-md); }
-.sec-title { flex:1; min-width:0; }
-.sec-title b, .sec-title small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.sec-title small { font-weight:400; }
-.fmt { display:flex; gap:var(--pn-s-1); }
-.entry .pn-card__body { padding:var(--pn-s-3) var(--pn-s-4) var(--pn-s-4); }
-.entry__head b { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:var(--pn-text-sm); color:var(--pn-text-2); }
-.avatar-drop { flex-direction:row; justify-content:flex-start; text-align:left; padding:var(--pn-s-3); }
-.avatar-drop__img { width:72px; height:72px; flex:none; display:grid; place-items:center; border-radius:var(--pn-r-lg); background:var(--pn-surface) center/cover no-repeat; border:1px solid var(--pn-border); }
+/* ---------- layout ---------- */
+.app{position:relative;z-index:1;height:calc(100vh - var(--topbar));display:grid;grid-template-columns:72px minmax(380px,470px) 1fr;grid-template-rows:minmax(0,1fr)}
+.app>*{min-height:0}
+.rail{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 0;border-right:1px solid var(--border);overflow-y:auto}
+.rail button{position:relative;width:48px;height:48px;border-radius:13px;display:grid;place-items:center;color:var(--faint);transition:background .2s,color .2s}
+.rail button:hover{color:var(--ink);background:var(--surface-2)}
+.rail button.active{color:var(--accent);background:var(--accent-soft)}
+.rail .dot{position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--border-strong);transition:background .3s}
+.rail .dot.ok{background:var(--ok)}
 
-/* ---------- xem trước ---------- */
-.preview { display:flex; flex-direction:column; min-width:0; background:var(--pn-surface-sunken); }
-.ptools { position:relative; z-index:5; display:flex; flex-wrap:wrap; align-items:center; gap:var(--pn-s-3) var(--pn-s-5); padding:var(--pn-s-3) var(--pn-s-4); border-bottom:1px solid var(--pn-border); background:var(--pn-surface); }
-.ptools .pn-swatches { gap:var(--pn-s-2); }
-.ptools .pn-swatch { width:24px; height:24px; }
-.pn-swatch--custom span { background:conic-gradient(#f43f5e,#f59e0b,#84cc16,#06b6d4,#8b5cf6,#f43f5e); }
-.zoom output { min-width:44px; text-align:center; font-variant-numeric:tabular-nums; }
-.scroll { flex:1; min-height:0; overflow:auto; padding:var(--pn-s-8) var(--pn-s-6) var(--pn-s-16); }
-.stage { position:relative; margin:0 auto; }
-.paper { position:absolute; top:0; left:0; transform-origin:top left; box-shadow:var(--pn-shadow-lg); }
-.guides { position:absolute; inset:0; pointer-events:none; }
-.guides i { position:absolute; left:0; right:0; border-top:2px dashed var(--pn-primary); }
-.guides i::after { content:attr(data-p); position:absolute; right:8px; top:4px; padding:2px 8px; border-radius:var(--pn-r-sm); background:var(--pn-primary); color:var(--pn-on-primary); font:600 11px/1.4 var(--pn-font); }
+/* ---------- editor ---------- */
+.editor{position:relative;overflow-y:auto;padding:20px 18px 80px;border-right:1px solid var(--border)}
+.editor__head{margin:0 4px 16px}
+.eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.editor__head h2{margin:4px 0 3px;font-size:21px;font-weight:700;letter-spacing:-.02em}
+.editor__head p{margin:0;color:var(--muted);font-size:12.5px}
+.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(12px);margin-bottom:10px;transition:border-color .2s,box-shadow .3s}
+.card.open{border-color:var(--border-strong);box-shadow:var(--shadow)}
+.card__head{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left}
+.card__ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface-2);color:var(--muted);flex:none;transition:background .2s,color .2s}
+.card.open .card__ico,.card__head:hover .card__ico{background:var(--accent-soft);color:var(--accent)}
+.card__title{flex:1;min-width:0}
+.card__title b{display:block;font-size:14px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card__title small{display:block;font-size:11.5px;color:var(--faint);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card__chev{color:var(--faint);display:grid;transition:transform .25s var(--ease)}
+.card.open .card__chev{transform:rotate(180deg)}
+.card__body{display:none;padding:2px 14px 16px}
+.card.open .card__body{display:block;animation:fade .25s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}}
 
-/* ---------- thư viện mẫu ---------- */
-.tpl-pop { width:min(700px, calc(100vw - 32px)); max-height:calc(100dvh - 190px); display:flex; flex-direction:column; gap:var(--pn-s-3); }
-.tpl-pop[hidden] { display:none; }
-.tpl-pop > :not(.tpl-grid) { flex:none; } /* không để tab/hint bị co lại khi khung bị giới hạn chiều cao */
-.tpl-grid { flex:1; min-height:0; overflow:auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--pn-s-3); padding:2px; }
-.tplcard { display:flex; flex-direction:column; justify-content:flex-start; min-width:0; padding:var(--pn-s-2) var(--pn-s-2) var(--pn-s-3); text-align:left; cursor:pointer; color:inherit; font:inherit; border:1.5px solid var(--pn-border); border-radius:var(--pn-r-lg); background:var(--pn-surface); }
-.tplcard:hover { border-color:var(--pn-border-strong); }
-.tplcard[aria-pressed="true"] { border-color:var(--pn-primary); background:var(--pn-primary-soft); }
-.tplcard .thumb { height:180px; overflow:hidden; border-radius:var(--pn-r-md); background:#fff; box-shadow:inset 0 0 0 1px var(--pn-border); }
-.tplcard .thumb > div { width:794px; transform:scale(.25); transform-origin:top left; pointer-events:none; }
-.tplcard b { display:block; margin:var(--pn-s-2) 2px 0; font-size:var(--pn-text-sm); }
-.tplcard small { display:block; margin:0 2px; line-height:1.4; }
+.f{display:block;margin-bottom:12px;min-width:0}
+.f>span{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.f input,.f textarea{display:block;width:100%;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--field);font-size:13.5px;line-height:1.55;outline:none}
+.f textarea{resize:vertical;min-height:110px}
+.f ::placeholder{color:var(--faint)}
+.f__top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.f__top>span{font-size:11.5px;font-weight:600;color:var(--muted)}
+.fmt{display:flex;gap:4px}
+.fmt button{height:26px;padding:0 8px;border-radius:7px;display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--muted);border:1px solid var(--border);background:var(--surface-2);transition:color .15s,border-color .15s}
+.fmt button:hover{color:var(--accent);border-color:var(--accent)}
+.fmt svg.i{width:13px;height:13px;stroke-width:2.2}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.title-f{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:14px;border-radius:10px;background:var(--surface-2);border:1px dashed var(--border-strong)}
+.title-f span{font-size:11.5px;color:var(--faint);font-weight:600;white-space:nowrap}
+.title-f input{flex:1;min-width:0;border:none;background:none;outline:none;font-weight:600;font-size:13px}
 
-/* ---------- điện thoại / máy tính bảng ---------- */
-.pn-bottom-nav { --pn-items:2; }
-.pn-bottom-nav__item { border:0; background:none; font:inherit; font-size:11px; cursor:pointer; }
-@media (max-width:1023.98px) {
-  body.pn { overflow:auto; }
-  .app { grid-template-columns:1fr; height:auto; min-height:calc(100dvh - var(--pn-header-h)); }
-  .rail, .progress, .pn-header .txt, #saveChip { display:none; }
-  .pn-header__inner { gap:var(--pn-s-2); }
-  .pn-header .pn-btn { padding:0 12px; }
-  .editor { border-right:none; padding-bottom:110px; }
-  body[data-view="edit"] .preview { display:none; }
-  body[data-view="preview"] .editor { display:none; }
-  .scroll { padding:var(--pn-s-5) var(--pn-s-3) 110px; }
-  .tpl-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.avatar-drop{display:flex;align-items:center;gap:14px;padding:12px;margin-bottom:14px;border-radius:14px;border:1.5px dashed var(--border-strong);background:var(--surface-2);transition:border-color .2s,background .2s}
+.avatar-drop.drag{border-color:var(--accent);background:var(--accent-soft)}
+.avatar-drop__img{width:76px;height:76px;border-radius:14px;flex:none;background:var(--field) center/cover no-repeat;display:grid;place-items:center;color:var(--faint);border:1px solid var(--border)}
+.avatar-drop__img svg.i{width:26px;height:26px}
+.avatar-drop b{display:block;font-size:13.5px}
+.avatar-drop small{display:block;color:var(--faint);font-size:11.5px;margin:2px 0 9px}
+.avatar-drop .row{display:flex;gap:6px;flex-wrap:wrap}
+
+.entry{border:1px solid var(--border);border-radius:13px;background:var(--surface-2);padding:10px 12px 0;margin-bottom:10px}
+.entry__head{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.entry__num{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;flex:none;margin-right:2px}
+.entry__label{flex:1;min-width:0;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry__head button{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:var(--faint);transition:background .15s,color .15s}
+.entry__head button:hover{background:var(--surface-solid);color:var(--ink)}
+.entry__head button.del:hover{color:var(--danger)}
+.entry__head svg.i{width:15px;height:15px}
+.add{width:100%;height:42px;border-radius:12px;border:1.5px dashed var(--border-strong);color:var(--muted);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;transition:border-color .2s,color .2s,background .2s}
+.add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.empty-note{text-align:center;color:var(--faint);font-size:12.5px;padding:4px 0 12px}
+
+/* ---------- preview ---------- */
+.preview{position:relative;display:flex;flex-direction:column;min-width:0;background:radial-gradient(var(--dot) 1px,transparent 1px) 0 0/20px 20px,var(--canvas)}
+.ptools{position:relative;z-index:5;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--surface);backdrop-filter:blur(16px)}
+.grp{display:flex;align-items:center;gap:7px}
+.lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-right:3px}
+.vsep{width:1px;height:24px;background:var(--border)}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:3px}
+.seg button{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);transition:color .15s}
+.seg button:hover{color:var(--ink)}
+.seg button.active{background:linear-gradient(145deg,var(--accent),var(--accent-deep));color:var(--accent-ink);box-shadow:0 4px 12px -4px var(--accent-glow)}
+.sw{position:relative;width:22px;height:22px;border-radius:50%;flex:none;border:2px solid var(--surface-solid);box-shadow:0 0 0 1px var(--border-strong);cursor:pointer;transition:transform .15s var(--ease),box-shadow .15s}
+.sw:hover{transform:scale(1.12)}
+.sw.active{box-shadow:0 0 0 2px var(--ink)}
+.sw-custom{overflow:hidden;background:conic-gradient(#f43f5e,#f59e0b,#84cc16,#06b6d4,#8b5cf6,#f43f5e)}
+.sw-custom input{position:absolute;inset:-8px;width:40px;height:40px;opacity:0;cursor:pointer}
+.pages{font-size:12px;color:var(--faint);font-weight:600;white-space:nowrap}
+.zoom output{min-width:44px;text-align:center;font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.scroll{flex:1;min-height:0;overflow:auto;padding:32px 24px 60px}
+.stage{position:relative;margin:0 auto}
+.paper{position:absolute;top:0;left:0;transform-origin:top left;box-shadow:var(--paper-shadow)}
+.guides{position:absolute;inset:0;pointer-events:none}
+.guides i{position:absolute;left:0;right:0;border-top:2px dashed rgba(99,102,241,.9)}
+.guides i::after{content:attr(data-p);position:absolute;right:8px;top:4px;padding:2px 8px;border-radius:6px;background:rgba(79,70,229,.95);color:#fff;font:700 11px/1.4 var(--font);font-style:normal}
+
+/* ---------- toast & mobile ---------- */
+.dlg{width:min(420px,calc(100vw - 32px));padding:0;border:1px solid var(--border-strong);border-radius:18px;background:var(--surface-solid);color:var(--ink);box-shadow:var(--shadow)}
+.dlg[open]{animation:pop .2s var(--ease)}
+.dlg::backdrop{background:rgba(5,7,12,.55);backdrop-filter:blur(3px)}
+.dlg__body{display:flex;gap:14px;padding:22px 22px 8px}
+.dlg__ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--accent-soft);color:var(--accent)}
+.dlg.danger .dlg__ico{background:rgba(240,97,109,.12);color:var(--danger)}
+.dlg h3{margin:2px 0 4px;font-size:16px;font-weight:700}
+.dlg p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.dlg__acts{display:flex;justify-content:flex-end;gap:8px;padding:16px 22px 20px}
+.dlg.danger .toolbtn.primary{background:var(--danger);box-shadow:0 10px 24px -10px rgba(240,97,109,.6);color:#fff}
+.toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:50;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:var(--surface-solid);border:1px solid var(--border-strong);box-shadow:var(--shadow);font-size:13px;font-weight:600;animation:pop .25s var(--ease)}
+.toast svg.i{color:var(--ok)}
+.toast.error svg.i{color:var(--danger)}
+.mtabs{display:none}
+@media (max-width:1180px){ .app{grid-template-columns:64px minmax(340px,420px) 1fr} .progress{display:none} }
+@media (max-width:860px){
+  body{overflow:auto}
+  .topbar{padding:0 12px;gap:8px}
+  .brand__sub,.chip,.topbar .txt{display:none}
+  .app{grid-template-columns:1fr;height:auto;min-height:calc(100vh - var(--topbar))}
+  .rail{display:none}
+  .editor{border-right:none;padding:16px 12px 100px}
+  body[data-view="edit"] .preview{display:none}
+  body[data-view="preview"] .editor{display:none}
+  .preview{min-height:calc(100vh - var(--topbar))}
+  .scroll{padding:20px 12px 100px}
+  .mtabs{display:inline-flex;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;background:var(--surface-solid);box-shadow:var(--shadow)}
+  .mtabs button{padding:10px 20px;font-size:13px}
+  .grid2{grid-template-columns:1fr}
 }
 
-@media print {
-  html, body.pn { height:auto; overflow:visible; background:#fff; }
-  .rail, .editor, .ptools, .guides { display:none !important; }
-  .app { display:block; height:auto; }
-  .preview { display:block !important; background:none; }
-  .scroll { padding:0; overflow:visible; }
-  .stage { width:auto !important; height:auto !important; }
-  .paper { position:static; transform:none !important; box-shadow:none; }
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff}
+  body::before,.topbar,.rail,.editor,.ptools,.mtabs,.toasts,.guides{display:none!important}
+  .app{display:block;height:auto}
+  .preview{display:block!important;background:none}
+  .scroll{padding:0;overflow:visible}
+  .stage{width:auto!important;height:auto!important}
+  .paper{position:static;transform:none!important;box-shadow:none}
 }
 </style>
 <style id="page-style"></style>
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="./site.webmanifest?v=1">
 </head>
-<body class="pn" data-view="edit">
-<header class="pn-header">
-  <div class="pn-header__inner">
-    <a class="pn-brand" href="./"><img src="assets/logo.svg" alt="">PaNIC CV Studio</a>
-    <span class="pn-spacer"></span>
-    <div class="progress" title="Số mục đã điền / tổng số mục của mẫu đang chọn">
-      <span>Hoàn thiện</span><div class="pn-progress"><span id="progBar"></span></div><b id="progTxt">0%</b>
-    </div>
-    <span class="pn-badge pn-badge--success" id="saveChip">Đã lưu</span>
-    <button class="pn-btn pn-btn--ghost pn-btn--icon" type="button" data-pn-theme-toggle id="themeBtn" aria-label="Đổi giao diện sáng / tối"></button>
-    <div class="pn-dropdown">
-      <button class="pn-btn" type="button" data-pn-menu aria-expanded="false" id="dataBtn"></button>
-      <div class="pn-menu" id="dataMenu" hidden></div>
-    </div>
-    <div class="pn-dropdown">
-      <button class="pn-btn pn-btn--primary" type="button" data-pn-menu aria-expanded="false" id="exportBtn"></button>
-      <div class="pn-menu" id="exportMenu" hidden></div>
-    </div>
+<body data-view="edit">
+<header class="topbar">
+  <div class="brand">
+    <img class="brand__logo" src="assets/logo.svg" alt="">
+    <div><div class="brand__title">PaNIC CV Studio</div><div class="brand__sub">Trình tạo CV</div></div>
   </div>
+  <div class="spacer"></div>
+  <div class="progress" title="Số mục đã điền / tổng số mục"><span>Hoàn thiện</span><div class="progress__bar"><i id="progBar"></i></div><b id="progTxt">0%</b></div>
+  <span class="chip" id="saveChip">Đã lưu</span>
+  <button class="toolbtn" data-act="theme" id="themeBtn" title="Đổi giao diện sáng / tối" aria-label="Đổi giao diện sáng / tối"></button>
+  <details class="menu">
+    <summary class="toolbtn" title="Sao lưu & dữ liệu" id="dataBtn"></summary>
+    <div class="menu__pop" id="dataMenu"></div>
+  </details>
+  <details class="menu">
+    <summary class="toolbtn primary" id="exportBtn"></summary>
+    <div class="menu__pop" id="exportMenu"></div>
+  </details>
 </header>
 
 <div class="app">
@@ -466,36 +606,34 @@ svg.i { width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
   <form class="editor" id="editor" onsubmit="return false"></form>
   <section class="preview" aria-label="Xem trước CV">
     <div class="ptools">
-      <div class="pn-row"><span class="pn-label">Mẫu</span>
-        <div class="pn-dropdown">
-          <button class="pn-btn pn-btn--sm" type="button" data-pn-menu aria-expanded="false" id="tplBtn"></button>
-          <div class="pn-popover tpl-pop" id="tplPop" hidden></div>
-        </div>
-      </div>
-      <div class="pn-row"><span class="pn-label">Màu nhấn</span><div class="pn-swatches" id="accentSw"></div></div>
-      <div class="pn-row"><span class="pn-label">Màu phụ</span><div class="pn-swatches" id="sideSw"></div></div>
-      <span class="pn-spacer"></span>
-      <span class="pn-badge" id="pages"></span>
-      <div class="pn-row zoom">
-        <button class="pn-btn pn-btn--sm pn-btn--icon" type="button" data-act="zoomOut" aria-label="Thu nhỏ">−</button>
-        <output class="pn-subtle" id="zoomTxt">100%</output>
-        <button class="pn-btn pn-btn--sm pn-btn--icon" type="button" data-act="zoomIn" aria-label="Phóng to">+</button>
-        <button class="pn-btn pn-btn--sm" type="button" data-act="zoomFit">Vừa khung</button>
+      <div class="grp"><span class="lbl">Mẫu</span><details class="menu" id="tplMenu"><summary class="toolbtn sm" id="tplBtn"></summary><div class="menu__pop left tpl-pop" id="tplPop"></div></details></div>
+      <div class="vsep"></div>
+      <div class="grp"><span class="lbl">Màu nhấn</span><span class="grp" id="accentSw"></span></div>
+      <div class="vsep"></div>
+      <div class="grp"><span class="lbl">Màu phụ</span><span class="grp" id="sideSw"></span></div>
+      <div class="spacer"></div>
+      <span class="pages" id="pages"></span>
+      <div class="grp zoom">
+        <button class="toolbtn sm" data-act="zoomOut" title="Thu nhỏ" aria-label="Thu nhỏ">−</button>
+        <output id="zoomTxt">100%</output>
+        <button class="toolbtn sm" data-act="zoomIn" title="Phóng to" aria-label="Phóng to">+</button>
+        <button class="toolbtn sm" data-act="zoomFit">Vừa khung</button>
       </div>
     </div>
     <div class="scroll" id="scroll"><div class="stage" id="stage"><div class="paper" id="paper"></div></div></div>
   </section>
 </div>
 
-<nav class="pn-bottom-nav" id="mtabs" aria-label="Chế độ xem"></nav>
-
-<dialog class="pn-modal" id="dlg"><form method="dialog">
-  <div class="pn-modal__header"><span class="pn-icon-tile" id="dlgIco"></span><h2 id="dlgTitle"></h2></div>
-  <div class="pn-modal__body"><p id="dlgMsg"></p></div>
-  <div class="pn-modal__footer"><button class="pn-btn" value="no">Hủy</button><button class="pn-btn pn-btn--primary" value="yes" id="dlgOk"></button></div>
+<div class="seg mtabs" id="mtabs">
+  <button data-act="view" data-v="edit" class="active">Soạn thảo</button>
+  <button data-act="view" data-v="preview">Xem trước</button>
+</div>
+<dialog class="dlg" id="dlg"><form method="dialog">
+  <div class="dlg__body"><span class="dlg__ico" id="dlgIco"></span><div><h3 id="dlgTitle"></h3><p id="dlgMsg"></p></div></div>
+  <div class="dlg__acts"><button class="toolbtn" value="no">Hủy</button><button class="toolbtn primary" value="yes" id="dlgOk"></button></div>
 </form></dialog>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
-<script src="vendor/panic-ui.min.js"></script>
 <script>
 const ICON = {
   phone: '<path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/>',
@@ -820,7 +958,6 @@ const UI = {
   print: '<path d="M7 9V3h10v6M7 17H4v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-3"/><rect x="7" y="14" width="10" height="7"/>',
 };
 const ic = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${UI[n]}</svg>`;
-const toast = (msg, error) => PanicUI.toast({ message: msg, type: error ? 'danger' : 'success' });
 
 const SEC_ICON = { info: 'user', objective: 'target', experience: 'briefcase', education: 'cap', projects: 'folder', activities: 'users',
   skills: 'spark', languages: 'globe', awards: 'trophy', certificates: 'badge', hobbies: 'heart', references: 'contact', more: 'info' };
@@ -840,11 +977,16 @@ const $ = id => document.getElementById(id);
 const editor = $('editor'), rail = $('rail'), paper = $('paper'), stage = $('stage'), scroller = $('scroll');
 let openSec = 'info', zoom = 'fit';
 
+function toast(msg, error) {
+  const t = Object.assign(document.createElement('div'), { className: 'toast' + (error ? ' error' : ''), innerHTML: ic(error ? 'info' : 'check') + esc(msg) });
+  $('toasts').append(t);
+  setTimeout(() => t.remove(), 2800);
+}
 // Hộp thoại xác nhận của trang (thay confirm() mặc định của trình duyệt)
 function ask(title, msg, ok = 'Đồng ý', danger = false) {
   const d = $('dlg');
+  d.classList.toggle('danger', danger);
   $('dlgIco').innerHTML = ic(danger ? 'trash' : 'info');
-  $('dlgOk').className = 'pn-btn ' + (danger ? 'pn-btn--danger' : 'pn-btn--primary');
   $('dlgTitle').textContent = title;
   $('dlgMsg').textContent = msg;
   $('dlgOk').textContent = ok;
@@ -852,12 +994,7 @@ function ask(title, msg, ok = 'Đồng ý', danger = false) {
   d.showModal();
   return new Promise(res => d.addEventListener('close', () => res(d.returnValue === 'yes'), { once: true }));
 }
-function setChip(text, cls) {
-  const c = $('saveChip');
-  c.textContent = text;
-  c.className = 'pn-badge ' + ({ saving: 'pn-badge--info', error: 'pn-badge--danger' }[cls] || 'pn-badge--success');
-  c.title = cls === 'error' ? 'Ảnh quá lớn hoặc trình duyệt chặn lưu — hãy dùng "Lưu file .json"' : '';
-}
+function setChip(text, cls) { const c = $('saveChip'); c.textContent = text; c.className = 'chip ' + cls; c.title = cls === 'error' ? 'Ảnh quá lớn hoặc trình duyệt chặn lưu — hãy dùng "Lưu file .json"' : ''; }
 
 // ---------- Editor ----------
 const filled = id => id === 'info' ? !!(state.name.trim() && (state.phone.trim() || state.email.trim()))
@@ -871,64 +1008,60 @@ function meta(id) {
 }
 const itemLabel = x => [x.title || x.major || x.role || x.year, x.company || x.school || x.org || x.name].filter(Boolean).join(' · ') || 'Mục mới';
 
-let uid = 0; // id cho cặp label–ô nhập
-const field = (k, label, o = {}) => {
-  const id = 'f' + ++uid;
-  return o.area
-    ? `<div class="pn-field"><div class="pn-row pn-row--between"><label class="pn-label" for="${id}">${label}</label><div class="fmt">
-        <button type="button" class="pn-btn pn-btn--ghost pn-btn--sm" data-act="fmt" data-f="bold" title="In đậm phần chọn (**chữ**)">${ic('bold')}Đậm</button>
-        <button type="button" class="pn-btn pn-btn--ghost pn-btn--sm" data-act="fmt" data-f="list" title="Bật/tắt gạch đầu dòng cho các dòng chọn">${ic('list')}Gạch đầu dòng</button>
-      </div></div><textarea class="pn-textarea" id="${id}" data-k="${k}" rows="${o.rows || 8}" placeholder="${esc(o.ph || '')}">${esc(getPath(k))}</textarea></div>`
-    : `<div class="pn-field"><label class="pn-label" for="${id}">${label}</label><input class="pn-input" id="${id}" data-k="${k}" value="${esc(getPath(k))}" placeholder="${esc(o.ph || '')}"></div>`;
-};
+const field = (k, label, o = {}) => o.area
+  ? `<div class="f"><div class="f__top"><span>${label}</span><div class="fmt">
+      <button type="button" data-act="fmt" data-f="bold" title="In đậm phần chọn (**chữ**)">${ic('bold')}Đậm</button>
+      <button type="button" data-act="fmt" data-f="list" title="Bật/tắt gạch đầu dòng cho các dòng chọn">${ic('list')}Gạch đầu dòng</button>
+    </div></div><textarea data-k="${k}" rows="${o.rows || 8}" placeholder="${esc(o.ph || '')}">${esc(getPath(k))}</textarea></div>`
+  : `<label class="f"><span>${label}</span><input data-k="${k}" value="${esc(getPath(k))}" placeholder="${esc(o.ph || '')}"></label>`;
 
 function listEditor(id) {
   const f = LISTS[id];
-  const items = state[id].map((x, i) => `<div class="pn-card pn-card--flat entry"><div class="pn-card__body pn-stack">
-      <div class="pn-row pn-row--nowrap entry__head"><span class="pn-badge pn-badge--primary">${i + 1}</span><b data-label="${id}.${i}"></b>
-        <button type="button" class="pn-btn pn-btn--ghost pn-btn--sm pn-btn--icon" data-act="up" data-list="${id}" data-i="${i}" aria-label="Đưa lên">${ic('up')}</button>
-        <button type="button" class="pn-btn pn-btn--ghost pn-btn--sm pn-btn--icon" data-act="down" data-list="${id}" data-i="${i}" aria-label="Đưa xuống">${ic('chev')}</button>
-        <button type="button" class="pn-btn pn-btn--ghost pn-btn--sm pn-btn--icon" data-act="del" data-list="${id}" data-i="${i}" aria-label="Xóa mục">${ic('trash')}</button></div>
+  const items = state[id].map((x, i) => `<div class="entry">
+      <div class="entry__head"><span class="entry__num">${i + 1}</span><span class="entry__label" data-label="${id}.${i}"></span>
+        <button type="button" data-act="up" data-list="${id}" data-i="${i}" title="Đưa lên">${ic('up')}</button>
+        <button type="button" data-act="down" data-list="${id}" data-i="${i}" title="Đưa xuống">${ic('chev')}</button>
+        <button type="button" class="del" data-act="del" data-list="${id}" data-i="${i}" title="Xóa mục">${ic('trash')}</button></div>
       ${f.length > 2
-        ? `<div class="pn-grid pn-sm-2" style="--pn-gap:var(--pn-s-3)">${f.slice(0, 4).map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>${field(`${id}.${i}.desc`, f[4][1], { area: true, rows: 5 })}`
-        : `<div class="pn-grid" style="grid-template-columns:90px 1fr;--pn-gap:var(--pn-s-3)">${f.map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>`}
-    </div></div>`).join('');
-  return (items || '<p class="pn-hint">Chưa có mục nào. Mục trống sẽ được ẩn trên CV.</p>')
-    + `<button type="button" class="pn-btn pn-btn--soft pn-btn--block" data-act="add" data-list="${id}">${ic('plus')}Thêm mục</button>`;
+        ? `<div class="grid2">${f.slice(0, 4).map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>${field(`${id}.${i}.desc`, f[4][1], { area: true, rows: 5 })}`
+        : `<div class="grid2" style="grid-template-columns:90px 1fr">${f.map(([k, l]) => field(`${id}.${i}.${k}`, l)).join('')}</div>`}
+    </div>`).join('');
+  return (items || '<div class="empty-note">Chưa có mục nào — mục trống sẽ được ẩn trên CV</div>')
+    + `<button type="button" class="add" data-act="add" data-list="${id}">${ic('plus')}Thêm mục</button>`;
 }
 
 function sectionBody(id) {
   if (id === 'info') return `
-    <label class="pn-dropzone avatar-drop" for="avatarFile">
-      <span class="avatar-drop__img"${state.avatar ? ` style="background-image:url('${state.avatar}')"` : ''}>${state.avatar ? '' : ic('image')}</span>
-      <span class="pn-stack" style="--pn-gap:var(--pn-s-1)"><strong>Ảnh đại diện</strong><span class="pn-hint">Kéo thả ảnh vào đây hoặc bấm để chọn file (JPG, PNG)</span>
-        ${state.avatar ? `<span><button type="button" class="pn-btn pn-btn--sm" data-act="noAvatar">${ic('trash')}Bỏ ảnh</button></span>` : ''}</span>
-      <input type="file" id="avatarFile" accept="image/*" hidden>
-    </label>
+    <div class="avatar-drop" id="drop">
+      <div class="avatar-drop__img"${state.avatar ? ` style="background-image:url('${state.avatar}')"` : ''}>${state.avatar ? '' : ic('image')}</div>
+      <div><b>Ảnh đại diện</b><small>Kéo thả ảnh vào đây hoặc chọn file (JPG, PNG)</small>
+        <div class="row"><label class="toolbtn sm">${ic('upload')}Chọn ảnh<input type="file" id="avatarFile" accept="image/*" hidden></label>
+        ${state.avatar ? `<button type="button" class="toolbtn sm" data-act="noAvatar">${ic('trash')}Bỏ ảnh</button>` : ''}</div></div>
+    </div>
     ${field('name', 'Họ và tên', { ph: 'Nguyễn Văn A' })}
     ${field('position', 'Vị trí ứng tuyển', { ph: 'Tùy chọn — vd. Kỹ sư thiết kế cơ khí' })}
-    <div class="pn-grid pn-sm-2" style="--pn-gap:var(--pn-s-3)">${field('phone', 'Điện thoại', { ph: '09xx xxx xxx' })}${field('email', 'Email', { ph: 'ban@email.com' })}</div>
+    <div class="grid2">${field('phone', 'Điện thoại', { ph: '09xx xxx xxx' })}${field('email', 'Email', { ph: 'ban@email.com' })}</div>
     ${field('address', 'Địa chỉ', { ph: 'Số nhà, đường, phường - Tỉnh/TP' })}
-    <div class="pn-grid pn-sm-2" style="--pn-gap:var(--pn-s-3)">${field('dob', 'Ngày sinh', { ph: 'Tùy chọn' })}${field('website', 'Website / LinkedIn', { ph: 'Tùy chọn' })}</div>`;
+    <div class="grid2">${field('dob', 'Ngày sinh', { ph: 'Tùy chọn' })}${field('website', 'Website / LinkedIn', { ph: 'Tùy chọn' })}</div>`;
   if (LISTS[id]) return listEditor(id);
   return field(id, 'Nội dung', { area: true, rows: id === 'skills' || id === 'more' ? 14 : 8, ph: PLACEHOLDER[id] });
 }
 
 function renderEditor() {
   const title = id => esc(state.titles[id] || TITLES[id]);
-  uid = 0;
-  editor.innerHTML = `<div class="editor__head"><h1>Soạn thông tin</h1>
-      <p class="pn-subtle">Thứ tự mục theo mẫu đang chọn. Gạch đầu dòng: bấm nút hoặc gõ "- ", Enter sẽ tự thêm dòng mới. Tự lưu trong trình duyệt.</p></div>
-    <div class="pn-accordion">`
-    + secList().map(id => `<details name="sec" data-card="${id}"${openSec === id ? ' open' : ''}>
-      <summary><span class="pn-icon-tile">${ic(SEC_ICON[id])}</span>
-        <span class="sec-title"><b data-title="${id}">${title(id)}</b><small class="pn-subtle" data-meta="${id}"></small></span></summary>
-      <div class="pn-accordion__content pn-stack">
-        <div class="pn-input-group"><span class="pn-addon">Tiêu đề mục</span><input class="pn-input" data-k="titles.${id}" value="${esc(state.titles[id])}" aria-label="Tiêu đề mục"></div>
+  editor.innerHTML = `<div class="editor__head"><div class="eyebrow">Nội dung CV</div><h2>Soạn thông tin</h2>
+      <p>Thứ tự mục theo mẫu đang chọn. Gạch đầu dòng: bấm nút hoặc gõ "- ", Enter sẽ tự thêm dòng mới. Tự lưu trong trình duyệt.</p></div>`
+    + secList().map(id => `<section class="card${openSec === id ? ' open' : ''}" data-card="${id}">
+      <button type="button" class="card__head" data-act="toggle" data-id="${id}" aria-expanded="${openSec === id}">
+        <span class="card__ico">${ic(SEC_ICON[id])}</span>
+        <span class="card__title"><b data-title="${id}">${title(id)}</b><small data-meta="${id}"></small></span>
+        <span class="card__chev">${ic('chev')}</span></button>
+      <div class="card__body">
+        <div class="title-f"><span>Tiêu đề mục</span><input data-k="titles.${id}" value="${esc(state.titles[id])}" aria-label="Tiêu đề mục"></div>
         ${sectionBody(id)}
-      </div></details>`).join('') + '</div>';
-  rail.innerHTML = secList().map(id => `<button type="button" class="pn-btn pn-btn--ghost pn-btn--icon" data-act="toggle" data-id="${id}"
-      aria-label="${title(id)}" aria-current="${openSec === id}">${ic(SEC_ICON[id])}<span class="dot" data-dot="${id}"></span></button>`).join('');
+      </div></section>`).join('');
+  rail.innerHTML = secList().map(id => `<button type="button" data-act="toggle" data-id="${id}" aria-label="${title(id)}"
+      class="${openSec === id ? 'active' : ''}">${ic(SEC_ICON[id])}<span class="dot" data-dot="${id}"></span></button>`).join('');
   refreshMeta();
   renderToolbar();
 }
@@ -944,24 +1077,29 @@ function refreshMeta() {
   }
   editor.querySelectorAll('[data-label]').forEach(el => { const [id, i] = el.dataset.label.split('.'); el.textContent = itemLabel(state[id][i]); });
   const pct = Math.round(done / own.length * 100);
-  $('progBar').style.setProperty('--value', pct + '%');
+  $('progBar').style.width = pct + '%';
   $('progTxt').textContent = pct + '%';
 }
 
 function renderToolbar() {
   const t = TEMPLATES[state.template];
   $('tplBtn').innerHTML = `${ic('layout')}${AUDIENCES[t.aud]} · ${esc(t.name)}${ic('chev')}`;
-  const sw = (key, list) => list.map(c => `<label class="pn-swatch" style="--c:${c}" title="${c}"><input type="radio" name="${key}" value="${c}"${state[key] === c ? ' checked' : ''} aria-label="Màu ${c}"><span></span></label>`).join('')
-    + `<label class="pn-swatch pn-swatch--custom" title="Chọn màu khác"><input type="color" data-k="${key}" value="${state[key]}" aria-label="Chọn màu khác"><span></span></label>`;
+  const sw = (key, list) => list.map(c => `<button type="button" class="sw${state[key] === c ? ' active' : ''}" style="background:${c}"
+      data-act="color" data-key="${key}" data-v="${c}" title="${c}" aria-label="Màu ${c}"></button>`).join('')
+    + `<label class="sw sw-custom${list.includes(state[key]) ? '' : ' active'}" title="Chọn màu khác"><input type="color" data-k="${key}" value="${state[key]}" aria-label="Chọn màu khác"></label>`;
   $('accentSw').innerHTML = sw('accent', ACCENTS);
   $('sideSw').innerHTML = sw('side', SIDES);
 }
 
-// Mở một mục (accordion chỉ mở một mục nhờ details[name]); từ thanh icon thì cuộn tới mục đó
-function openSection(id) {
-  const d = editor.querySelector(`[data-card="${id}"]`);
-  d.open = true;
-  editor.scrollTo({ top: d.offsetTop - 12, behavior: 'smooth' });
+function openSection(id, fromRail) {
+  openSec = !fromRail && openSec === id ? null : id;
+  editor.querySelectorAll('.card').forEach(c => {
+    c.classList.toggle('open', c.dataset.card === openSec);
+    c.querySelector('.card__head').setAttribute('aria-expanded', c.dataset.card === openSec);
+  });
+  rail.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.id === openSec));
+  // Cuộn riêng khung editor (scrollIntoView sẽ cuộn cả trang làm mất topbar)
+  if (fromRail) editor.scrollTo({ top: editor.querySelector(`[data-card="${id}"]`).offsetTop - 12, behavior: 'smooth' });
 }
 
 // ---------- Preview ----------
@@ -995,24 +1133,28 @@ document.fonts.ready.then(fit);
 function update() { renderPreview(); save(); }
 function rerenderAll() { renderEditor(); update(); }
 
-// ---------- Theme (PaNIC UI lưu lựa chọn, mặc định sáng) ----------
-const themeIcon = () => { $('themeBtn').innerHTML = ic(document.documentElement.dataset.theme === 'dark' ? 'sun' : 'moon'); };
-document.addEventListener('pn:theme', themeIcon);
-themeIcon();
+// ---------- Theme ----------
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $('themeBtn').innerHTML = ic(t === 'dark' ? 'sun' : 'moon');
+  try { localStorage.setItem(KEY + '-theme', t); } catch {}
+}
+setTheme((() => { try { return localStorage.getItem(KEY + '-theme'); } catch {} })()
+  || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
 
 // ---------- Menus ----------
-const item = (act, icon, title, sub, cls = '') => `<button type="button" class="pn-menu__item ${cls}" data-act="${act}">${ic(icon)}<span><b>${title}</b><br><small class="pn-subtle">${sub}</small></span></button>`;
+const item = (act, icon, title, sub, cls = '') => `<button type="button" class="menu__item ${cls}" data-act="${act}"><span class="ico">${ic(icon)}</span><span><b>${title}</b><small>${sub}</small></span></button>`;
 $('exportBtn').innerHTML = `${ic('download')}<span class="txt">Xuất CV</span>`;
 $('exportMenu').innerHTML = item('print', 'file', 'PDF', 'Hộp thoại in → “Lưu dưới dạng PDF”, chữ sắc nét & chọn được')
   + item('png', 'image', 'Ảnh PNG', 'Độ phân giải cao, gửi nhanh qua chat')
   + item('html', 'code', 'Trang HTML', 'Một file độc lập, mở bằng trình duyệt');
 $('dataBtn').innerHTML = `${ic('db')}<span class="txt">Dữ liệu</span>`;
-$('dataMenu').innerHTML = `<label class="pn-menu__item">${ic('upload')}<span><b>Mở file .json</b><br><small class="pn-subtle">Tiếp tục chỉnh CV đã lưu trước đó</small></span>
+$('dataMenu').innerHTML = `<label class="menu__item"><span class="ico">${ic('upload')}</span><span><b>Mở file .json</b><small>Tiếp tục chỉnh CV đã lưu trước đó</small></span>
     <input type="file" id="openJson" accept=".json,application/json" hidden></label>`
   + item('saveJson', 'save', 'Lưu file .json', 'Sao lưu để sửa sau hoặc chuyển máy')
-  + '<div class="pn-menu__sep"></div>'
+  + '<div class="menu__sep"></div>'
   + item('sample', 'reset', 'Nạp dữ liệu mẫu', 'Thay nội dung hiện tại bằng CV mẫu')
-  + item('clear', 'trash', 'Xóa trắng nội dung', 'Giữ lại tiêu đề mục và màu sắc', 'pn-menu__item--danger');
+  + item('clear', 'trash', 'Xóa trắng nội dung', 'Giữ lại tiêu đề mục và màu sắc', 'danger');
 
 // ---------- Actions ----------
 const slug = () => (state.name || 'cv').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'cv';
@@ -1031,7 +1173,7 @@ function offscreen() {
 }
 
 const ACTIONS = {
-  toggle(_, btn) { openSection(btn.dataset.id); },
+  toggle(_, btn) { openSection(btn.dataset.id, !!btn.closest('.rail')); },
   add({ list }) { state[list].push(Object.fromEntries(LISTS[list].map(([f]) => [f, '']))); rerenderAll(); },
   async del({ list, i }) {
     if (await ask('Xóa mục này?', `“${itemLabel(state[list][i])}” sẽ bị xóa khỏi CV.`, 'Xóa', true)) { state[list].splice(i, 1); rerenderAll(); }
@@ -1039,7 +1181,7 @@ const ACTIONS = {
   up({ list, i }) { if (i > 0) { const a = state[list]; [a[i - 1], a[i]] = [a[i], a[i - 1]]; rerenderAll(); } },
   down({ list, i }) { const a = state[list]; if (i < a.length - 1) { [a[i + 1], a[i]] = [a[i], a[i + 1]]; rerenderAll(); } },
   fmt(_, btn) {
-    const ta = btn.closest('.pn-field').querySelector('textarea'), { selectionStart: s, selectionEnd: e, value: v } = ta;
+    const ta = btn.closest('.f').querySelector('textarea'), { selectionStart: s, selectionEnd: e, value: v } = ta;
     if (btn.dataset.f === 'bold') ta.setRangeText(`**${v.slice(s, e) || 'chữ đậm'}**`, s, e, 'select');
     else {
       const ls = v.lastIndexOf('\n', s - 1) + 1, le = v.indexOf('\n', Math.max(e - 1, s)), end = le < 0 ? v.length : le;
@@ -1050,19 +1192,16 @@ const ACTIONS = {
     ta.dispatchEvent(new Event('input', { bubbles: true }));
   },
   noAvatar() { state.avatar = ''; rerenderAll(); },
-  tpl(_, btn) {
-    state.template = btn.dataset.v;
-    [state.accent, state.side] = TEMPLATES[state.template].colors;
-    $('tplPop').hidden = true;
-    $('tplBtn').setAttribute('aria-expanded', 'false');
-    rerenderAll();
-  },
+  tpl(_, btn) { state.template = btn.dataset.v; [state.accent, state.side] = TEMPLATES[state.template].colors; rerenderAll(); },
+  aud(_, btn) { galAud = btn.dataset.v; renderGallery(); },
+  color(_, btn) { state[btn.dataset.key] = btn.dataset.v; renderToolbar(); update(); },
+  theme() { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); },
   zoomIn() { zoom = Math.min(2, Math.round(parseInt($('zoomTxt').textContent) / 10 + 1) / 10); fit(); },
   zoomOut() { zoom = Math.max(0.3, Math.round(parseInt($('zoomTxt').textContent) / 10 - 1) / 10); fit(); },
   zoomFit() { zoom = 'fit'; fit(); },
   view(_, btn) {
     document.body.dataset.view = btn.dataset.v;
-    $('mtabs').querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b === btn ? 'page' : 'false'));
+    $('mtabs').querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
     fit();
   },
   async sample() {
@@ -1115,23 +1254,14 @@ const AUD_HINT = {
 let galAud;
 function renderGallery() {
   galAud ||= TEMPLATES[state.template].aud;
-  $('tplPop').innerHTML = `<div class="pn-segmented pn-segmented--block" id="audSeg">${Object.entries(AUDIENCES).map(([k, v]) =>
-      `<button type="button" value="${k}" aria-pressed="${galAud === k}">${v}</button>`).join('')}</div>
-    <p class="pn-hint">${AUD_HINT[galAud]}</p>
+  $('tplPop').innerHTML = `<div class="seg aud-tabs">${Object.entries(AUDIENCES).map(([k, v]) =>
+      `<button type="button" data-act="aud" data-v="${k}" class="${galAud === k ? 'active' : ''}">${v}</button>`).join('')}</div>
+    <p class="aud-hint">${AUD_HINT[galAud]}</p>
     <div class="tpl-grid">${Object.entries(TEMPLATES).filter(([, t]) => t.aud === galAud).map(([k, t]) =>
-      `<button type="button" class="tplcard" aria-pressed="${state.template === k}" data-act="tpl" data-v="${k}">
-        <div class="thumb"><div>${t.render({ ...state, accent: t.colors[0], side: t.colors[1] })}</div></div><b>${esc(t.name)}</b><small class="pn-subtle">${esc(t.desc)}</small></button>`).join('')}</div>`;
+      `<button type="button" class="tplcard${state.template === k ? ' active' : ''}" data-act="tpl" data-v="${k}">
+        <div class="thumb"><div>${t.render({ ...state, accent: t.colors[0], side: t.colors[1] })}</div></div><b>${esc(t.name)}</b><small>${esc(t.desc)}</small></button>`).join('')}</div>`;
 }
-$('tplBtn').addEventListener('click', () => { if ($('tplPop').hidden) renderGallery(); }); // chạy trước khi PaNIC UI mở popover
-document.addEventListener('pn:change', e => { if (e.target.id === 'audSeg') { galAud = e.detail; renderGallery(); } });
-$('mtabs').innerHTML = [['edit', 'user', 'Soạn thảo'], ['preview', 'layout', 'Xem trước']].map(([v, icon, label], i) =>
-  `<button type="button" class="pn-bottom-nav__item" data-act="view" data-v="${v}" aria-current="${i ? 'false' : 'page'}">${ic(icon)}${label}</button>`).join('');
-// Accordion: ghi nhớ mục đang mở và đánh dấu trên thanh icon
-editor.addEventListener('toggle', e => {
-  if (!e.target.open) return;
-  openSec = e.target.dataset.card;
-  rail.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.id === openSec));
-}, true);
+$('tplMenu').addEventListener('toggle', e => { if (e.target.open) renderGallery(); });
 
 // Enter trong dòng gạch đầu dòng tự thêm "- " cho dòng mới; Enter ở dòng "- " trống thì thoát danh sách
 editor.addEventListener('keydown', e => {
@@ -1148,6 +1278,9 @@ editor.addEventListener('keydown', e => {
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-act]');
   if (btn) ACTIONS[btn.dataset.act]({ list: btn.dataset.list, i: +btn.dataset.i }, btn);
+  document.querySelectorAll('details.menu[open]').forEach(d => {
+    if (e.target.isConnected && (!d.contains(e.target) || e.target.closest('button.menu__item, .tplcard'))) d.open = false;
+  });
 });
 
 document.addEventListener('input', e => {
@@ -1182,21 +1315,26 @@ function loadAvatar(file) {
 
 document.addEventListener('change', e => {
   if (e.target.dataset?.k === 'accent' || e.target.dataset?.k === 'side') return renderToolbar();
-  if (e.target.type === 'radio' && (e.target.name === 'accent' || e.target.name === 'side')) { state[e.target.name] = e.target.value; return update(); }
   const file = e.target.files?.[0];
   if (!file) return;
-  if (e.target.id === 'openJson') {
-    $('dataMenu').hidden = true;
+  if (e.target.id === 'avatarFile') loadAvatar(file);
+  else if (e.target.id === 'openJson') {
+    e.target.closest('details').open = false;
     file.text().then(t => { state = sanitize(JSON.parse(t)); rerenderAll(); toast('Đã mở ' + file.name); })
       .catch(() => toast('File .json không hợp lệ.', true));
   }
   e.target.value = '';
 });
 
-editor.addEventListener('pn:files', e => { if (e.detail[0]) loadAvatar(e.detail[0]); });
-// Thả file lệch khỏi khung ảnh: chặn trình duyệt mở file đó thay cho trang
-addEventListener('dragover', e => e.preventDefault());
-addEventListener('drop', e => e.preventDefault());
+// Kéo thả ảnh đại diện; chặn trình duyệt mở file khi thả lệch chỗ
+addEventListener('dragover', e => { e.preventDefault(); $('drop')?.classList.toggle('drag', !!e.target.closest?.('#drop')); });
+addEventListener('dragleave', e => { if (!e.relatedTarget) $('drop')?.classList.remove('drag'); });
+addEventListener('drop', e => {
+  e.preventDefault();
+  $('drop')?.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (file && e.target.closest?.('#drop')) loadAvatar(file);
+});
 
 rerenderAll();
 </script>
